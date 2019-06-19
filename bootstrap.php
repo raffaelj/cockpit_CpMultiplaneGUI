@@ -1,17 +1,28 @@
 <?php
 /**
- * Some ui tweaks for Cockpit CMS, that fit with CpMultiplane frontend
+ * GUI and some ui tweaks for Cockpit CMS, that fit with CpMultiplane frontend - work in progress
  * 
  * @see       https://github.com/raffaelj/cockpit_CpMultiplaneGUI
  * @see       https://github.com/agentejo/cockpit/
  * 
- * @version   0.1.0
+ * @version   0.1.1
  * @author    Raffael Jesche
  * @license   MIT
  */
 
 
 $this->module('cpmultiplanegui')->extend([
+
+    'getConfig' => function() {
+
+        $config = array_replace_recursive(
+            $this->app->storage->getKey('cockpit/options', 'multiplane', []),
+            $this->app->retrieve('multiplane', [])
+        );
+
+        return $config;
+
+    },
 
     'findMultiplaneDir' => function() {
 
@@ -28,7 +39,6 @@ $this->module('cpmultiplanegui')->extend([
     },
 
 ]);
-
 
 
 // acl
