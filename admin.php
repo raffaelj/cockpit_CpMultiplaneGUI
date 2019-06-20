@@ -4,6 +4,7 @@ $this->on('admin.init', function() {
     
     // add custom assets
     $this('admin')->addAssets('cpmultiplanegui:assets/field-simple-gallery.tag');
+    $this('admin')->addAssets('cpmultiplanegui:assets/getImage.js');
 
     if ($this->module('cockpit')->hasaccess('cpmultiplanegui', 'manage')) {
 
