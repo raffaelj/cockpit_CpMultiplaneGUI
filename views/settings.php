@@ -234,7 +234,7 @@
 
         riot.util.bind(this);
 
-        this.config  = {{ json_encode($config) }};
+        this.config  = {{ !empty($config) ? json_encode($config) : '{}' }};
         this.fields  = {{ json_encode($fieldnames) }};
         this.tab     = 'main';
         // this.tab     = 'preview';
