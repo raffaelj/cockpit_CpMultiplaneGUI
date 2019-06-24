@@ -69,11 +69,49 @@ $this->on('admin.init', function() {
     $this->on('collections.entry.aside', function() {
 
         $pages = $this->retrieve('multiplane/pages', 'pages');
+        $posts = $this->retrieve('multiplane/pages', 'posts');
 
         if (strpos($this['route'], '/collections/entry/'.$pages) === 0) {
-            $this->renderView('cpmultiplanegui:views/partials/pages.entry.aside.php', compact('collections', 'singletons', 'other'));
+            $this->renderView('cpmultiplanegui:views/partials/pages.entry.aside.php');
+        }
+
+        elseif (strpos($this['route'], '/collections/entry/'.$posts) === 0) {
+            $this->renderView('cpmultiplanegui:views/partials/posts.entry.aside.php');
         }
 
     });
+
+    // quick hack to add options to EditorFormats addon
+    // As long as @pauloamgomes doesn't change the form id, the route or the variable names, it will work
+    // route: https://github.com/pauloamgomes/CockpitCms-EditorFormats/blob/master/Controller/Admin.php#L30
+    // form id: https://github.com/pauloamgomes/CockpitCms-EditorFormats/blob/master/views/formats/format.php#L9
+    // toolbar: https://github.com/pauloamgomes/CockpitCms-EditorFormats/blob/master/views/formats/format.php#L129
+    // format.plugins: https://github.com/pauloamgomes/CockpitCms-EditorFormats/blob/master/views/formats/format.php#L127
+    if (isset($this['modules']['editorformats'])) {
+
+        // load only if EditorFormats Controller was called
+        $this->on('app.editorformats.controller.admin.init', function() {
+
+            if (strpos($this['route'], '/editor-formats/format') !== false) {
+
+                $this->on('app.layout.contentafter', function() {
+
+                    echo '<div class="uk-hidden" id="add-mpgetimage-to-editor-formats">';
+                    // toolbar option
+                    echo '{ toolbar.indexOf("mpgetimage") === -1 ? toolbar.push("mpgetimage") : "" }';
+                    // plugin option
+                    echo '{ format.plugins.mpgetimage = format.plugins.mpgetimage || false }';
+                    echo '</div>';
+
+                    // move div inside riot view to update the variables
+                    echo '<script>App.$("#account-form").prepend(App.$("#add-mpgetimage-to-editor-formats"));</script>';
+
+                });
+
+            }
+
+        });
+
+    }
 
 });

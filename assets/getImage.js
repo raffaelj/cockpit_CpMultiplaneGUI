@@ -167,9 +167,6 @@ App.$(document).on('init-wysiwyg-editor', function(e, editor) {
 
     });
 
-/* 
-    // to do...
-
     // don't enable automatically, if EditorFormats addon is installed
     if (editor.settings.modified === undefined) {
 
@@ -186,10 +183,5 @@ App.$(document).on('init-wysiwyg-editor', function(e, editor) {
         editor.settings.toolbar += ' | mpgetimage';
 
     }
- */
-
-    // enable plugin and toolbar button
-    editor.settings.plugins = editor.settings.plugins + ' mpgetimage';
-    editor.settings.toolbar += ' | mpgetimage';
 
 });

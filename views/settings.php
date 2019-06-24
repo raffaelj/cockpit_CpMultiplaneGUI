@@ -33,7 +33,8 @@
 
               <div class="uk-width-1-1" show="{tab=='main'}">
 
-                  <div class="uk-panel-box">
+                  <div class="uk-panel-box uk-panel-card uk-margin">
+
                       <div class="uk-grid uk-grid-small uk-grid-match">
 
                           <div class="uk-panel-box uk-width-1-3">
@@ -68,6 +69,14 @@
                               <field-boolean bind="config.isMultilingual" label="@lang('isMultilingual')"></field-boolean>
                           </div>
 
+                          <div class="uk-panel-box uk-width-1-3">
+                              <label class="uk-display-block uk-margin-small">
+                                  @lang('displayBreadcrumbs')
+                                  <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('')" data-uk-tooltip></i>
+                              </label>
+                              <field-boolean bind="config.displayBreadcrumbs" label="@lang('displayBreadcrumbs')"></field-boolean>
+                          </div>
+
                           <div class="uk-panel-box uk-width-1-1">
                               <label class="uk-display-block uk-margin-small">
                                   @lang('preRenderFields')
@@ -77,7 +86,156 @@
                           </div>
 
                       </div>
+
                   </div>
+
+                  <div class="uk-panel-box uk-panel-card uk-margin">
+
+                      <label class="uk-display-block uk-margin-small">@lang('lexy')</label>
+                      
+                      <div class="uk-panel-box uk-panel-card uk-margin">
+
+                          <label class="uk-display-block uk-margin-small">@lang('@headerimage')</label>
+
+                          <div class="uk-grid uk-grid-small uk-grid-match">
+                              <div class="uk-panel-box uk-width-1-4">
+                                  <label class="uk-display-block uk-margin-small">
+                                      @lang('width')
+                                      <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('')" data-uk-tooltip></i>
+                                  </label>
+                                  <field-text bind="config.lexy.headerimage.width"></field-text>
+                              </div>
+                              <div class="uk-panel-box uk-width-1-4">
+                                  <label class="uk-display-block uk-margin-small">
+                                      @lang('height')
+                                      <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('')" data-uk-tooltip></i>
+                                  </label>
+                                  <field-text bind="config.lexy.headerimage.height"></field-text>
+                              </div>
+                              <div class="uk-panel-box uk-width-1-4">
+                                  <label class="uk-display-block uk-margin-small">
+                                      @lang('quality')
+                                      <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('')" data-uk-tooltip></i>
+                                  </label>
+                                  <field-text bind="config.lexy.headerimage.quality"></field-text>
+                              </div>
+                              <div class="uk-panel-box uk-width-1-4">
+                                  <label class="uk-display-block uk-margin-small">
+                                      @lang('method')
+                                      <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('')" data-uk-tooltip></i>
+                                  </label>
+                                  <field-text bind="config.lexy.headerimage.method"></field-text>
+                              </div>
+                          </div>
+
+                      </div>
+                      
+                      <div class="uk-panel-box uk-panel-card uk-margin">
+
+                          <label class="uk-display-block uk-margin-small">@lang('@logo')</label>
+
+                          <div class="uk-grid uk-grid-small uk-grid-match">
+                              <div class="uk-panel-box uk-width-1-4">
+                                  <label class="uk-display-block uk-margin-small">
+                                      @lang('width')
+                                      <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('')" data-uk-tooltip></i>
+                                  </label>
+                                  <field-text bind="config.lexy.logo.width"></field-text>
+                              </div>
+                              <div class="uk-panel-box uk-width-1-4">
+                                  <label class="uk-display-block uk-margin-small">
+                                      @lang('height')
+                                      <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('')" data-uk-tooltip></i>
+                                  </label>
+                                  <field-text bind="config.lexy.logo.height"></field-text>
+                              </div>
+                              <div class="uk-panel-box uk-width-1-4">
+                                  <label class="uk-display-block uk-margin-small">
+                                      @lang('quality')
+                                      <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('')" data-uk-tooltip></i>
+                                  </label>
+                                  <field-text bind="config.lexy.logo.quality"></field-text>
+                              </div>
+                          </div>
+
+                      </div>
+                      
+                      <div class="uk-panel-box uk-panel-card uk-margin">
+
+                          <label class="uk-display-block uk-margin-small">@lang('@image')</label>
+
+                          <div class="uk-grid uk-grid-small uk-grid-match">
+                              <div class="uk-panel-box uk-width-1-4">
+                                  <label class="uk-display-block uk-margin-small">
+                                      @lang('width')
+                                      <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('')" data-uk-tooltip></i>
+                                  </label>
+                                  <field-text bind="config.lexy.image.width"></field-text>
+                              </div>
+                              <div class="uk-panel-box uk-width-1-4">
+                                  <label class="uk-display-block uk-margin-small">
+                                      @lang('height')
+                                      <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('')" data-uk-tooltip></i>
+                                  </label>
+                                  <field-text bind="config.lexy.image.height"></field-text>
+                              </div>
+                              <div class="uk-panel-box uk-width-1-4">
+                                  <label class="uk-display-block uk-margin-small">
+                                      @lang('quality')
+                                      <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('')" data-uk-tooltip></i>
+                                  </label>
+                                  <field-text bind="config.lexy.image.quality"></field-text>
+                              </div>
+                              <div class="uk-panel-box uk-width-1-4">
+                                  <label class="uk-display-block uk-margin-small">
+                                      @lang('method')
+                                      <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('')" data-uk-tooltip></i>
+                                  </label>
+                                  <field-text bind="config.lexy.image.method"></field-text>
+                              </div>
+                          </div>
+
+                      </div>
+                      
+                      <div class="uk-panel-box uk-panel-card uk-margin">
+
+                          <label class="uk-display-block uk-margin-small">@lang('@thumbnail')</label>
+
+                          <div class="uk-grid uk-grid-small uk-grid-match">
+                              <div class="uk-panel-box uk-width-1-4">
+                                  <label class="uk-display-block uk-margin-small">
+                                      @lang('width')
+                                      <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('')" data-uk-tooltip></i>
+                                  </label>
+                                  <field-text bind="config.lexy.thumbnail.width"></field-text>
+                              </div>
+                              <div class="uk-panel-box uk-width-1-4">
+                                  <label class="uk-display-block uk-margin-small">
+                                      @lang('height')
+                                      <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('')" data-uk-tooltip></i>
+                                  </label>
+                                  <field-text bind="config.lexy.thumbnail.height"></field-text>
+                              </div>
+                              <div class="uk-panel-box uk-width-1-4">
+                                  <label class="uk-display-block uk-margin-small">
+                                      @lang('quality')
+                                      <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('')" data-uk-tooltip></i>
+                                  </label>
+                                  <field-text bind="config.lexy.thumbnail.quality"></field-text>
+                              </div>
+                              <div class="uk-panel-box uk-width-1-4">
+                                  <label class="uk-display-block uk-margin-small">
+                                      @lang('method')
+                                      <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('')" data-uk-tooltip></i>
+                                  </label>
+                                  <field-text bind="config.lexy.thumbnail.method"></field-text>
+                              </div>
+                          </div>
+
+                      </div>
+
+                  </div>
+
               </div>
 
               <div class="uk-width-1-1" show="{tab=='forms'}">

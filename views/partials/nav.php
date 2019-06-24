@@ -24,7 +24,7 @@
         @foreach($singletons as $collection)
         @if($app->module('singletons')->hasaccess($collection['name'], 'singleton_edit'))
         <li class="uk-float-left uk-margin-small-right">
-            <a class="uk-svg-adjust {{ $collection['active'] ? 'uk-active' : 'uk-text-muted' }}" href="@route('/singletons/forms/'.$collection['name'])">
+            <a class="uk-svg-adjust {{ $collection['active'] ? 'uk-active' : 'uk-text-muted' }}" href="@route('/singletons/form/'.$collection['name'])">
                 <i class="uk-icon-justify" title="{{ htmlspecialchars($collection['label'] ? $collection['label'] : $collection['name']) }}" data-uk-tooltip="pos:'bottom'">
                     @if(!empty($collection['icon']))
                     <img src="@base('assets:app/media/icons/'.$collection['icon'])" alt="@lang($collection['label'] ?? $collection['name'])" data-uk-svg width="20px" height="20px" style="color:{{ $collection['color'] ?? '' }}" />
