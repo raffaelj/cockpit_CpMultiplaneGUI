@@ -34,7 +34,6 @@ $pageTypes = $app->retrieve('multiplane/pageTypes', ['page', 'post']);
 
         <div class="uk-margin">
             <label class="uk-text-small">@lang('Startpage')</label>
-            <span class="uk-text-small"> (To do: check, if other page is startpage)</span>
             <div class="uk-margin-small-top">
                 <field-boolean bind="entry.startpage"></field-boolean>
             </div>

@@ -18,52 +18,58 @@ $this->on('admin.init', function() {
 
     }
 
+    $config = $this->module('cpmultiplanegui')->getConfig();
+
     // custom nav
     // add menu item for all Collections and Singletons from "menu.aside"
-    $this->on('app.layout.contentbefore', function() {
+    if (isset($config['guiDisplayCustomNav']) && $config['guiDisplayCustomNav']) {
 
-        $collections = [];
-        if (isset($this->modules['collections'])) {
+        $this->on('app.layout.contentbefore', function() {
 
-            $cols = $this->module('collections')->getCollectionsInGroup();
+            $collections = [];
+            if (isset($this->modules['collections'])) {
 
-            foreach($cols as $collection) {
-                if (isset($collection['in_menu']) && $collection['in_menu']) {
-                    $collection['active'] = preg_match('#^/collections/(entries|entry)/'.$collection['name'].'#', $this['route']);
-                    $collections[] = $collection;
+                $cols = $this->module('collections')->getCollectionsInGroup();
+
+                foreach($cols as $collection) {
+                    if (isset($collection['in_menu']) && $collection['in_menu']) {
+                        $collection['active'] = preg_match('#^/collections/(entries|entry)/'.$collection['name'].'#', $this['route']);
+                        $collections[] = $collection;
+                    }
                 }
+
             }
 
-        }
+            $singletons = [];
+            if (isset($this->modules['singletons'])) {
 
-        $singletons = [];
-        if (isset($this->modules['singletons'])) {
+                $sings = $this->module('singletons')->getSingletonsInGroup();
 
-            $sings = $this->module('singletons')->getSingletonsInGroup();
-
-            foreach($sings as $singleton) {
-                if (isset($singleton['in_menu']) && $singleton['in_menu']) {
-                    $singleton['active'] = preg_match('#^/singletons/form/'.$singleton['name'].'#', $this['route']);
-                    $singletons[] = $singleton;
+                foreach($sings as $singleton) {
+                    if (isset($singleton['in_menu']) && $singleton['in_menu']) {
+                        $singleton['active'] = preg_match('#^/singletons/form/'.$singleton['name'].'#', $this['route']);
+                        $singletons[] = $singleton;
+                    }
                 }
+
             }
 
-        }
+            // add assetsmanager to custom icons
+            $other = [];
 
-        // add assetsmanager to custom icons
-        $other = [];
+            $other[] = [
+                'name' => 'assets',
+                'label' => $this('i18n')->get('Assets'),
+                'route' => '/assetsmanager',
+                'icon'  => 'assets.svg',
+                'active' => strpos($this['route'], '/assetsmanager') === 0
+            ];
 
-        $other[] = [
-            'name' => 'assets',
-            'label' => $this('i18n')->get('Assets'),
-            'route' => '/assetsmanager',
-            'icon'  => 'assets.svg',
-            'active' => strpos($this['route'], '/assetsmanager') === 0
-        ];
+            $this->renderView('cpmultiplanegui:views/partials/nav.php', compact('collections', 'singletons', 'other'));
 
-        $this->renderView('cpmultiplanegui:views/partials/nav.php', compact('collections', 'singletons', 'other'));
+        });
 
-    });
+    }
 
     // side bar options for pages
     $this->on('collections.entry.aside', function() {

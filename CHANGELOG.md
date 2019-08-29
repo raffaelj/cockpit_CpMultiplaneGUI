@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.5
+
+* added option for custom navigation to settings, disabled by default
+* some cleanup
+
 ## 0.1.4
 
 * now getImage TinyMCE plugin doesn't load automtically anymore, if EditorFormats addon is active

@@ -15,6 +15,7 @@
             <li class="{ tab=='main' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="main">@lang('Main')</a></li>
             <li class="{ tab=='forms' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="forms">@lang('Forms')</a></li>
             <li class="{ tab=='preview' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="preview">@lang('Content Preview')</a></li>
+            <li class="{ tab=='gui' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="gui">@lang('GUI')</a></li>
             <li class="{ tab=='maintenance' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="maintenance">@lang('Maintenance Mode')</a></li>
         </ul>
     </div>
@@ -327,6 +328,23 @@
                                   <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('Copy this link to your collections content preview settings. You might have to adjust it, if you use subfolders.')" data-uk-tooltip></i>
 
                               </div>
+                          </div>
+
+                      </div>
+                  </div>
+
+              </div>
+
+              <div class="uk-width-1-1" show="{tab=='gui'}">
+
+                  <div class="uk-panel-box">
+                      <div class="uk-grid uk-grid-small">
+
+                          <div class="uk-panel-box uk-width-1-2">
+                              <label class="uk-display-block uk-margin-small">
+                                  @lang('guiDisplayCustomNav')
+                              </label>
+                              <field-boolean bind="config.guiDisplayCustomNav" label="@lang('Display custom nav in backend')"></field-boolean>
                           </div>
 
                       </div>
