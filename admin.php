@@ -20,11 +20,27 @@ $this->on('admin.init', function() {
 
     $config = $this->module('cpmultiplanegui')->getConfig();
 
+    // display "Show in menu" toggle
+    $this->on('collections.settings.aside', function() {
+        $this->renderView('cpmultiplanegui:views/partials/collections.settings.aside.php');
+    });
+
+    $this->on('forms.settings.aside', function() {
+        $this->renderView('cpmultiplanegui:views/partials/forms.settings.aside.php');
+    });
+
+    $this->on('singletons.settings.aside', function() {
+        $this->renderView('cpmultiplanegui:views/partials/singletons.settings.aside.php');
+    });
+
     // custom nav
     // add menu item for all Collections and Singletons from "menu.aside"
     if (isset($config['guiDisplayCustomNav']) && $config['guiDisplayCustomNav']) {
 
         $this->on('app.layout.contentbefore', function() {
+
+            // check, if `in_menu` feature exists - was dropped between Cockpit 0.9.2 and 0.9.3
+            $in_menu = $this->path('collections:views/partials/menu.php') ? 'in_menu' : 'gui_in_header';
 
             $collections = [];
             if (isset($this->modules['collections'])) {
@@ -32,7 +48,7 @@ $this->on('admin.init', function() {
                 $cols = $this->module('collections')->getCollectionsInGroup();
 
                 foreach($cols as $collection) {
-                    if (isset($collection['in_menu']) && $collection['in_menu']) {
+                    if (isset($collection[$in_menu]) && $collection[$in_menu]) {
                         $collection['active'] = preg_match('#^/collections/(entries|entry)/'.$collection['name'].'#', $this['route']);
                         $collections[] = $collection;
                     }
@@ -46,7 +62,7 @@ $this->on('admin.init', function() {
                 $sings = $this->module('singletons')->getSingletonsInGroup();
 
                 foreach($sings as $singleton) {
-                    if (isset($singleton['in_menu']) && $singleton['in_menu']) {
+                    if (isset($singleton[$in_menu]) && $singleton[$in_menu]) {
                         $singleton['active'] = preg_match('#^/singletons/form/'.$singleton['name'].'#', $this['route']);
                         $singletons[] = $singleton;
                     }
