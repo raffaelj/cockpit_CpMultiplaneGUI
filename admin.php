@@ -103,6 +103,13 @@ $this->on('admin.init', function() {
 
     });
 
+    // link to website in system menu
+    $this->on('cockpit.menu.system', function() {
+
+        $this->renderView('cpmultiplanegui:views/partials/system.menu.php');
+
+    });
+
     // quick hack to add options to EditorFormats addon
     // As long as @pauloamgomes doesn't change the form id, the route or the variable names, it will work
     // route:          https://github.com/pauloamgomes/CockpitCms-EditorFormats/blob/master/Controller/Admin.php#L30
