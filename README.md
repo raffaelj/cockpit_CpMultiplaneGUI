@@ -20,7 +20,6 @@ git clone https://github.com/raffaelj/cockpit_CpMultiplaneGUI.git addons/CpMulti
 
 ## To do
 
-* [ ] startpage toggle - check, if different page was set to startpage before
 * [ ] setup - Create collections, singletons and forms from default templates
 
 [1]: https://github.com/agentejo/cockpit/
