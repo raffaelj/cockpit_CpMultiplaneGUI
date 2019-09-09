@@ -106,7 +106,11 @@ $this->on('admin.init', function() {
     // link to website in system menu
     $this->on('cockpit.menu.system', function() {
 
-        $this->renderView('cpmultiplanegui:views/partials/system.menu.php');
+        $config = $this->module('cpmultiplanegui')->getConfig();
+
+        $url = isset($config['siteUrl']) ? $config['siteUrl'] : $this['site_url'];
+
+        $this->renderView('cpmultiplanegui:views/partials/system.menu.php', compact('url'));
 
     });
 
