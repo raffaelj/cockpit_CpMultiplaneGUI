@@ -1,7 +1,10 @@
 # Changelog
 
+## upcoming (0.1.6)
+
 * changed the key for custom navigation in header from `in_menu` to `gui_in_header` and added custom settings (Cockpit dropped that feature in version 0.9.3)
 * added unique check for startpage toggle
+* refactored sidebar
 
 ## 0.1.5
 

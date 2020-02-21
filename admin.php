@@ -88,16 +88,48 @@ $this->on('admin.init', function() {
     }
 
     // side bar options for pages
-    $this->on('collections.entry.aside', function() {
+    $this->on('collections.entry.aside', function($collection) {
 
         $pages = $this->retrieve('multiplane/pages', 'pages');
         $posts = $this->retrieve('multiplane/pages', 'posts');
 
-        if (strpos($this['route'], '/collections/entry/'.$pages) === 0) {
-            $this->renderView('cpmultiplanegui:views/partials/pages.entry.aside.php');
+        if ($collection == $pages) {
+
+            $_forms = $this->module('forms')->forms();
+            $forms  = [];
+
+            foreach ($_forms as $name => $meta) {
+               $forms[] = [
+                 'name' => $name,
+                 'label' => !empty($meta['label']) ? $meta['label'] : $name,
+               ];
+            }
+
+            // sort forms
+            usort($forms, function($a, $b) {
+                return mb_strtolower($a['label']) <=> mb_strtolower($b['label']);
+            });
+
+            $_collections = $this->module('collections')->collections();
+            $collections = [];
+            foreach ($_collections as $name => $meta) {
+               if ($name == $collection) continue;
+               $collections[] = [
+                 'name' => $name,
+                 'label' => !empty($meta['label']) ? $meta['label'] : $name,
+               ];
+            }
+
+            // sort forms
+            usort($collections, function($a, $b) {
+                return mb_strtolower($a['label']) <=> mb_strtolower($b['label']);
+            });
+
+            // $this->renderView('cpmultiplanegui:views/partials/pages.entry.aside.php');
+            $this->renderView('cpmultiplanegui:views/partials/pages.entry.aside.php', compact('forms', 'collections'));
         }
 
-        elseif (strpos($this['route'], '/collections/entry/'.$posts) === 0) {
+        elseif ($collection == $posts) {
             $this->renderView('cpmultiplanegui:views/partials/posts.entry.aside.php');
         }
 
