@@ -3,7 +3,9 @@
 $this->on('admin.init', function() {
     
     // add custom assets
-    $this('admin')->addAssets('cpmultiplanegui:assets/field-simple-gallery.tag');
+    $this('admin')->addAssets('cpmultiplanegui:assets/components/field-simple-gallery.tag');
+    $this('admin')->addAssets('cpmultiplanegui:assets/components/field-seo.tag');
+    $this('admin')->addAssets('cpmultiplanegui:assets/components/field-key-value-pair.tag');
     $this('admin')->addAssets('cpmultiplanegui:assets/getImage.js');
 
     if ($this->module('cockpit')->hasaccess('cpmultiplanegui', 'manage')) {
@@ -170,5 +172,42 @@ $this->on('admin.init', function() {
         });
 
     }
+
+});
+
+// unique check for startpage toggle
+$this->on('admin.init', function() {
+
+    $config = $this->module('cpmultiplanegui')->getConfig();
+
+    $pages = !empty($config['pages']) ? $config['pages'] : 'pages';
+
+    $this->on("collections.save.before.{$pages}", function($name, &$entry, $isUpdate) {
+
+        if (isset($entry['startpage']) && $entry['startpage'] == true) {
+
+            // check, if another page exists, that was the startpage before
+
+            $filter = ['startpage' => true];
+
+            if ($isUpdate && isset($entry['_id'])) {
+                $filter['_id'] = ['$not' => $entry['_id']];
+            }
+
+            $check = $this->module('collections')->findOne($name, $filter);
+
+            if ($check) {
+
+                // set old startpage to false
+
+                $check['startpage'] = false;
+
+                $this->module('collections')->save($name, [$check], ['revision' => true]);
+
+            }
+
+        }
+
+    });
 
 });

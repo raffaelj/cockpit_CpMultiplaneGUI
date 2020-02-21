@@ -47,46 +47,9 @@ $this->module('cpmultiplanegui')->extend([
 
 ]);
 
-// unique check for startpage toggle
-$this->on('admin.init', function() {
 
-    $config = $this->module('cpmultiplanegui')->getConfig();
-
-    $pages = !empty($config['pages']) ? $config['pages'] : 'pages';
-
-    $this->on("collections.save.before.{$pages}", function($name, &$entry, $isUpdate) {
-
-        if (isset($entry['startpage']) && $entry['startpage'] == true) {
-
-            // check, if another page exists, that was the startpage before
-
-            $filter = ['startpage' => true];
-
-            if ($isUpdate && isset($entry['_id'])) {
-                $filter['_id'] = ['$not' => $entry['_id']];
-            }
-
-            $check = $this->module('collections')->findOne($name, $filter);
-
-            if ($check) {
-
-                // set old startpage to false
-
-                $check['startpage'] = false;
-
-                $this->module('collections')->save($name, [$check], ['revision' => true]);
-
-            }
-
-        }
-
-    });
-
-});
-
-
-// acl
-$this('acl')->addResource('cpmultiplanegui', ['manage']);
+// ACL
+$app('acl')->addResource('cpmultiplanegui', ['create', 'delete', 'manage']);
 
 // admin ui
 if (COCKPIT_ADMIN && !COCKPIT_API_REQUEST) {
