@@ -1,54 +1,42 @@
 
 <li id="custom_nav">
     <ul class="uk-list">
-        @foreach($collections as $collection)
+        @foreach($collections as $c)
         <li class="uk-float-left uk-margin-small-right">
-            <a class="uk-svg-adjust {{ $collection['active'] ? 'uk-active' : 'uk-text-muted' }}" href="@route('/collections/entries/'.$collection['name'])">
-                <i class="uk-icon-justify" title="{{ htmlspecialchars($collection['label'] ? $collection['label'] : $collection['name']) }}" data-uk-tooltip="pos:'bottom'">
-                    @if(!empty($collection['icon']))
-                    <img src="@base('assets:app/media/icons/'.$collection['icon'])" alt="@lang($collection['label'] ?? $collection['name'])" data-uk-svg width="20px" height="20px" style="color:{{ $collection['color'] ?? '' }}" />
-                    @else
-                    <img src="@base('collections:icon.svg')" alt="@lang($collection['label'])" data-uk-svg width="20px" height="20px" style="color:{{ $collection['color'] ?? '' }}" />
-                    @endif
+            <a class="uk-svg-adjust {{ $c['active'] ? 'uk-active' : 'uk-text-muted' }}" href="@route('/collections/entries/'.$c['name'])">
+                <i class="uk-icon-justify" title="{{ htmlspecialchars($c['label']) }}" data-uk-tooltip="pos:'bottom'">
+                    <img src="@base(!empty($c['icon']) ? 'assets:app/media/icons/'.$c['icon'] : 'collections:icon.svg')" alt="@lang($c['label'])" data-uk-svg width="20px" height="20px" style="color:{{ $c['color'] }}" />
                 </i>
-                <span class="custom_nav_label uk-hidden-medium uk-text-small uk-text-bolder">@lang($collection['label'] ?? $collection['name'])</span>
+                <span class="custom_nav_label uk-hidden-medium uk-text-small uk-text-bolder">@lang($c['label'])</span>
             </a>
-            @if($app->module('collections')->hasaccess($collection['name'], 'entries_create'))
-            <a class="uk-svg-adjust uk-text-muted" href="@route('/collections/entry')/{{ $collection['name'] }}" title="@lang('Add entry')" data-uk-tooltip="pos:'right'">
+            @if($app->module('collections')->hasaccess($c['name'], 'entries_create'))
+            <a class="uk-svg-adjust uk-text-muted" href="@route('/collections/entry')/{{ $c['name'] }}" title="@lang('Add entry')" data-uk-tooltip="pos:'right'">
                 <img src="@base('assets:app/media/icons/plus-circle.svg')" width="16px" height="16px" data-uk-svg />
             </a>
             @endif
         </li>
         @endforeach
 
-        @foreach($singletons as $collection)
-        @if($app->module('singletons')->hasaccess($collection['name'], 'singleton_edit'))
+        @foreach($singletons as $s)
+        @if($app->module('singletons')->hasaccess($s['name'], 'singleton_edit'))
         <li class="uk-float-left uk-margin-small-right">
-            <a class="uk-svg-adjust {{ $collection['active'] ? 'uk-active' : 'uk-text-muted' }}" href="@route('/singletons/form/'.$collection['name'])">
-                <i class="uk-icon-justify" title="{{ htmlspecialchars($collection['label'] ? $collection['label'] : $collection['name']) }}" data-uk-tooltip="pos:'bottom'">
-                    @if(!empty($collection['icon']))
-                    <img src="@base('assets:app/media/icons/'.$collection['icon'])" alt="@lang($collection['label'] ?? $collection['name'])" data-uk-svg width="20px" height="20px" style="color:{{ $collection['color'] ?? '' }}" />
-                    @else
-                    <img src="@base('singletons:icon.svg')" alt="@lang($collection['label'])" data-uk-svg width="20px" height="20px" style="color:{{ $collection['color'] ?? '' }}" />
-                    @endif
+            <a class="uk-svg-adjust {{ $s['active'] ? 'uk-active' : 'uk-text-muted' }}" href="@route('/singletons/form/'.$s['name'])">
+                <i class="uk-icon-justify" title="{{ htmlspecialchars($s['label']) }}" data-uk-tooltip="pos:'bottom'">
+                    <img src="@base(!empty($s['icon']) ? 'assets:app/media/icons/'.$s['icon'] : 'singletons:icon.svg')" alt="@lang($s['label'])" data-uk-svg width="20px" height="20px" style="color:{{ $s['color']}}" />
                 </i>
-                <span class="custom_nav_label uk-hidden-medium uk-text-small uk-text-bolder">@lang($collection['label'] ?? $collection['name'])</span>
+                <span class="custom_nav_label uk-hidden-medium uk-text-small uk-text-bolder">@lang($s['label'])</span>
             </a>
         </li>
         @endif
         @endforeach
 
-        @foreach($other as $collection)
+        @foreach($other as $o)
         <li class="uk-float-left uk-margin-small-right">
-            <a class="uk-svg-adjust {{ $collection['active'] ? 'uk-active' : 'uk-text-muted' }}" href="@route($collection['route'])">
-                <i class="uk-icon-justify" title="{{ htmlspecialchars($collection['label'] ? $collection['label'] : $collection['name']) }}" data-uk-tooltip="pos:'bottom'">
-                    @if(!empty($collection['icon']))
-                    <img src="@base('assets:app/media/icons/'.$collection['icon'])" alt="@lang($collection['label'])" data-uk-svg width="20px" height="20px" style="color:{{ $collection['color'] ?? '' }}" />
-                    @else
-                    <img src="@base('singletons:icon.svg')" alt="@lang($collection['label'] ?? $collection['name'])" data-uk-svg width="20px" height="20px" style="color:{{ $collection['color'] ?? '' }}" />
-                    @endif
+            <a class="uk-svg-adjust {{ $o['active'] ? 'uk-active' : 'uk-text-muted' }}" href="@route($o['route'])">
+                <i class="uk-icon-justify" title="{{ htmlspecialchars($o['label']) }}" data-uk-tooltip="pos:'bottom'">
+                    <img src="@base('assets:app/media/icons/'.$o['icon'])" alt="@lang($o['label'])" data-uk-svg width="20px" height="20px" style="color:{{ $o['color'] ?? '' }}" />
                 </i>
-                <span class="custom_nav_label uk-hidden-medium uk-text-small uk-text-bolder">@lang($collection['label'] ?? $collection['name'])</span>
+                <span class="custom_nav_label uk-hidden-medium uk-text-small uk-text-bolder">@lang($o['label'])</span>
             </a>
         </li>
         @endforeach

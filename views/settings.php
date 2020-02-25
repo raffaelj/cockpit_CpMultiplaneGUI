@@ -1,13 +1,14 @@
 
-<div>
-    <ul class="uk-breadcrumb">
-        <li><a href="@route('/settings')">@lang('Settings')</a></li>
-        <li class="uk-active"><span>@lang('CpMultiplane')</span></li>
-    </ul>
-</div>
+<div riot-view>
+    <div>
+        <ul class="uk-breadcrumb">
+            <li><a href="@route('/multiplane')">@lang('Multiplane')</a></li>
+            <li class="uk-active"><span>@lang('Settings')</span></li>
+        </ul>
+        <a class="uk-button uk-button-outline uk-text-warning uk-float-right" onclick="{ showEntryObject }">@lang('Show json')</a>
+    </div>
 
-
-<div class="uk-container-center" riot-view>
+  <div class="uk-container-center">
 
     <div class="uk-tab-center uk-width-1-1 uk-margin-bottom">
         <ul class="uk-tab uk-margin-bottom">
@@ -20,9 +21,9 @@
         </ul>
     </div>
 
-    <div class="uk-width-1-1 uk-grid uk-grid-small">
+    <div class="uk-container-center uk-width-large-3-4">
 
-        <div class="uk-width-2-3">
+        <div class="uk-width-1-1">
 
           <form class="" onsubmit="{ submit }">
 
@@ -397,11 +398,10 @@
           </form>
         </div>
 
-        <div class="uk-width-1-3">
-            <pre>{ JSON.stringify(config, null, 2) }</pre>
-        </div>
-
     </div>
+  </div>
+
+    <cp-inspectobject ref="inspect"></cp-inspectobject>
 
 
     <script type="view/script">
@@ -467,6 +467,11 @@
 
         generateToken() {
             this.config.livePreviewToken = App.Utils.generateToken(120);
+        }
+
+        showEntryObject() {
+            $this.refs.inspect.show($this.config);
+            $this.update();
         }
 
 /* 

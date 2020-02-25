@@ -80,31 +80,28 @@ $allowSubpages = true;
         </div>
         @endif
 
-        @if($allowSubpages)
+        @if($allowSubpages && (($pageTypeDetection == 'type') || ($pageTypeDetection == 'collections' && count($collections))))
         <div class="uk-margin">
 { (entry.subpagemodule = entry.subpagemodule || {}) && '' }
             <cp-fieldcontainer>
 
-                <div class="uk-flex uk-flex-bottom">
-                    <field-boolean bind="entry.subpagemodule.active" label="@lang('Sub pages')" class="small"></field-boolean>
-                    <span class="uk-margin-left uk-text-muted">{ entry.subpagemodule.collection }</span>
+                <div class="{ entry.subpagemodule.active && 'uk-flex uk-flex-bottom' }">
+                    <field-boolean bind="entry.subpagemodule.active" label="@lang('Sub pages')" class="uk-margin-small uk-text-middle small"></field-boolean>
+
+                    <select bind="entry.subpagemodule.collection" aria-label="@lang('Select a collection for sub pages')" class="uk-margin-small uk-margin-small-left" title="@lang('Select collection')" if="{ entry.subpagemodule.active }">
+                        <option value=""></option>
+                        @foreach($collections as $col)
+                        <option value="{{ $col['name'] }}">{{ $col['label'] }}</option>
+                        @endforeach
+                    </select>
+
                     <span class="uk-flex-item-1"></span>
                     <a class="uk-icon-chevron-circle-{ mp_subpageToggle ? 'up' : 'down' } uk-icon-hover" aria-label="@lang('Toggle dropdown')" onclick="{ mp_toggleSubpage }" if="{ entry.subpagemodule.active }"></a>
                 </div>
 
-                @if($pageTypeDetection == 'collections' && count($collections) > 1)
+                @if($pageTypeDetection == 'collections' && count($collections))
                 <div if="{ mp_subpageToggle && entry.subpagemodule.active }">
                     <div class="uk-margin-small-top">
-                        <div class="">
-                            <label class="uk-text-small uk-text-middle">@lang('Collection')</label>
-                            <select bind="entry.subpagemodule.collection" aria-label="@lang('Select a collection for sub pages')" class="uk-margin-small">
-                                <option value=""></option>
-                                @foreach($collections as $col)
-                                <option value="{{ $col['name'] }}">{{ $col['label'] }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
                         <div class="">
                             <label class="uk-text-small">@lang('Custom route')</label>
                             <input type="text" class="uk-form-width-small" bind="entry.subpagemodule.route{lang ? '_'+lang : ''}" />

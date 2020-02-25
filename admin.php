@@ -3,21 +3,31 @@
 $this->on('admin.init', function() {
     
     // add custom assets
-    $this('admin')->addAssets('cpmultiplanegui:assets/components/field-simple-gallery.tag');
-    $this('admin')->addAssets('cpmultiplanegui:assets/components/field-seo.tag');
-    $this('admin')->addAssets('cpmultiplanegui:assets/components/field-key-value-pair.tag');
-    $this('admin')->addAssets('cpmultiplanegui:assets/getImage.js');
+    $this('admin')->addAssets([
+        'cpmultiplanegui:assets/components/field-simple-gallery.tag',
+        'cpmultiplanegui:assets/components/field-seo.tag',
+        'cpmultiplanegui:assets/components/field-key-value-pair.tag',
+        'cpmultiplanegui:assets/getImage.js'
+    ]);
 
+    // bind admin routes
+    $this->bindClass('CpMultiplaneGUI\\Controller\\Admin', 'multiplane');
+
+    // add settings entry
     if ($this->module('cockpit')->hasaccess('cpmultiplanegui', 'manage')) {
-
-        // bind admin routes
-        $this->bindClass('CpMultiplaneGUI\\Controller\\Admin', 'cpmultiplane');
-
-        // add settings entry
         $this->on('cockpit.view.settings.item', function () {
             $this->renderView('cpmultiplanegui:views/partials/settings.php');
         });
+    }
 
+    // add to modules menu
+    if ($this->module('cockpit')->hasaccess('cpmultiplanegui', 'manage')) {
+        $this->helper('admin')->addMenuItem('modules', [
+            'label'  => 'Multiplane',
+            'icon'   => 'cpmultiplanegui:icon.svg',
+            'route'  => '/multiplane',
+            'active' => strpos($this['route'], '/multiplane') === 0
+        ]);
     }
 
     $config = $this->module('cpmultiplanegui')->getConfig();
@@ -41,18 +51,22 @@ $this->on('admin.init', function() {
 
         $this->on('app.layout.contentbefore', function() {
 
-            // check, if `in_menu` feature exists - was dropped between Cockpit 0.9.2 and 0.9.3
-            $in_menu = $this->path('collections:views/partials/menu.php') ? 'in_menu' : 'gui_in_header';
-
             $collections = [];
             if (isset($this->modules['collections'])) {
 
-                $cols = $this->module('collections')->getCollectionsInGroup();
+                $_collections = $this->module('collections')->getCollectionsInGroup();
 
-                foreach($cols as $collection) {
-                    if (isset($collection[$in_menu]) && $collection[$in_menu]) {
-                        $collection['active'] = preg_match('#^/collections/(entries|entry)/'.$collection['name'].'#', $this['route']);
-                        $collections[] = $collection;
+                foreach($_collections as $c) {
+                    if (isset($c['multiplane']['gui_in_header'])
+                      && $c['multiplane']['gui_in_header'] === true) {
+
+                        $collections[] = [
+                            'name' => $c['name'],
+                            'label' => !empty($c['label']) ? $c['label'] : $c['name'],
+                            'icon' => $c['icon'] ?? '',
+                            'color' => $c['color'] ?? '',
+                            'active' => preg_match('#^/collections/(entries|entry)/'.$c['name'].'$#', $this['route']),
+                        ];
                     }
                 }
 
@@ -61,12 +75,19 @@ $this->on('admin.init', function() {
             $singletons = [];
             if (isset($this->modules['singletons'])) {
 
-                $sings = $this->module('singletons')->getSingletonsInGroup();
+                $_singletons = $this->module('singletons')->getSingletonsInGroup();
 
-                foreach($sings as $singleton) {
-                    if (isset($singleton[$in_menu]) && $singleton[$in_menu]) {
-                        $singleton['active'] = preg_match('#^/singletons/form/'.$singleton['name'].'#', $this['route']);
-                        $singletons[] = $singleton;
+                foreach($_singletons as $s) {
+                    if (isset($s['multiplane']['gui_in_header'])
+                      && $s['multiplane']['gui_in_header'] === true) {
+
+                        $singletons[] = [
+                            'name' => $s['name'],
+                            'label' => !empty($s['label']) ? $s['label'] : $s['name'],
+                            'icon' => $s['icon'] ?? '',
+                            'color' => $s['color'] ?? '',
+                            'active' => preg_match('#^/singletons/form/'.$s['name'].'$#', $this['route']),
+                        ];
                     }
                 }
 
@@ -95,44 +116,62 @@ $this->on('admin.init', function() {
         $pages = $this->retrieve('multiplane/pages', 'pages');
         $posts = $this->retrieve('multiplane/pages', 'posts');
 
-        if ($collection == $pages) {
+        $_collection = $this->module('collections')->collection($collection);
 
-            $_forms = $this->module('forms')->forms();
-            $forms  = [];
+        if ($_collection['multiplane']['sidebar'] ?? false) {
 
-            foreach ($_forms as $name => $meta) {
-               $forms[] = [
-                 'name' => $name,
-                 'label' => !empty($meta['label']) ? $meta['label'] : $name,
-               ];
+            $type = $_collection['multiplane']['type'] ?? 'subpages';
+
+            $config = $this->module('cpmultiplanegui')->getConfig();
+
+            if ($type == 'pages') {
+
+                $_forms = $config['use']['forms'] ?? [];
+                $forms  = [];
+                foreach ($_forms as $name) {
+                    $meta = $this->module('forms')->form($name);
+                    if (!$meta) continue;
+                    $forms[] = [
+                        'name' => $name,
+                        'label' => !empty($meta['label']) ? $meta['label'] : $name,
+                    ];
+                }
+                // sort forms
+                usort($forms, function($a, $b) {
+                    return mb_strtolower($a['label']) <=> mb_strtolower($b['label']);
+                });
+
+                $collections = [];
+                $_collections = $config['use']['collections'] ?? [];
+                foreach($_collections as $name) {
+
+                    if ($name == $collection) continue;
+
+                    $meta = $this->module('collections')->collection($name);
+                    if (!$meta) continue;
+
+                    if (!isset($meta['multiplane']['type'])
+                      || $meta['multiplane']['type'] != 'subpages' ) {
+                        continue;
+                    }
+
+                    $collections[] = [
+                        'name'  => $name,
+                        'label' => !empty($meta['label']) ? $meta['label'] : $name,
+                    ];
+                }
+                // sort collections
+                usort($collections, function($a, $b) {
+                    return mb_strtolower($a['label']) <=> mb_strtolower($b['label']);
+                });
+
+                $this->renderView('cpmultiplanegui:views/partials/pages.entry.aside.php', compact('forms', 'collections'));
             }
 
-            // sort forms
-            usort($forms, function($a, $b) {
-                return mb_strtolower($a['label']) <=> mb_strtolower($b['label']);
-            });
-
-            $_collections = $this->module('collections')->collections();
-            $collections = [];
-            foreach ($_collections as $name => $meta) {
-               if ($name == $collection) continue;
-               $collections[] = [
-                 'name' => $name,
-                 'label' => !empty($meta['label']) ? $meta['label'] : $name,
-               ];
+            else {
+                $this->renderView('cpmultiplanegui:views/partials/posts.entry.aside.php');
             }
 
-            // sort forms
-            usort($collections, function($a, $b) {
-                return mb_strtolower($a['label']) <=> mb_strtolower($b['label']);
-            });
-
-            // $this->renderView('cpmultiplanegui:views/partials/pages.entry.aside.php');
-            $this->renderView('cpmultiplanegui:views/partials/pages.entry.aside.php', compact('forms', 'collections'));
-        }
-
-        elseif ($collection == $posts) {
-            $this->renderView('cpmultiplanegui:views/partials/posts.entry.aside.php');
         }
 
     });
@@ -140,9 +179,7 @@ $this->on('admin.init', function() {
     // link to website in system menu
     $this->on('cockpit.menu.system', function() {
 
-        $config = $this->module('cpmultiplanegui')->getConfig();
-
-        $url = isset($config['siteUrl']) ? $config['siteUrl'] : $this['site_url'];
+        $url = $this->module('cpmultiplanegui')->getSiteUrl();
 
         $this->renderView('cpmultiplanegui:views/partials/system.menu.php', compact('url'));
 
