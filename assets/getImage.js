@@ -4,7 +4,7 @@ App.$(document).on('init-wysiwyg-editor', function(e, editor) {
     tinymce.PluginManager.add('mpgetimage', function(ed) {
 
          var openDialog = function() {
-            
+
             var node = ed.selection.getNode(),
                 width = '800',
                 height = '',
@@ -16,10 +16,10 @@ App.$(document).on('init-wysiwyg-editor', function(e, editor) {
                 src = node.getAttribute('src');
 
             if (src) {
-              
+
                 // for some reason, URLSearchParams doesn't detect the first param after "?"
                 var query = src.split('?')[1];
-                
+
                 var params = new URLSearchParams(query);
 
                 if (params.has('w')) width = params.get('w');
@@ -87,7 +87,8 @@ App.$(document).on('init-wysiwyg-editor', function(e, editor) {
                 if (asset.mime.match(/^image\//)) {
 
                     // might break with sub folders... needs some more tests
-                    var src = SITE_URL + '/getImage?src=' + asset._id;
+                    // var src = SITE_URL + '/getImage?src=' + asset._id;
+                    var src = MP_SITE_URL + '/getImage?src=' + asset._id;
 
                     // skip default and empty values
                     if (!!width.trim() && width != '800')       src += '&w=' + width;

@@ -1,7 +1,13 @@
 <?php
 
 $this->on('admin.init', function() {
-    
+
+    // add js MP_SITE_URL var for getImage route (TinyMCE plugin)
+    $this->on('app.layout.header', function() {
+        $url = $this->module('cpmultiplanegui')->getSiteUrl(true);
+        echo '<script>var MP_SITE_URL = "' . $url . '"</script>';
+    });
+
     // add custom assets
     $this('admin')->addAssets([
         'cpmultiplanegui:assets/components/field-simple-gallery.tag',
