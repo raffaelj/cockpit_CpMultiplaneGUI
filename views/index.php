@@ -78,10 +78,6 @@
 
         </div>
 
-        <p>
-            <a href="@route('/multiplane/settings')">Old settings page</a>
-        </p>
-
     </div>
 
     <script type="view/script">

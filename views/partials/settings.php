@@ -6,6 +6,6 @@
         <div class="uk-text-truncate uk-margin">
             @lang('Multiplane')
         </div>
-        <a class="uk-position-cover" aria-label="@lang('Multiplane')" href="@route('/multiplane/settings')"></a>
+        <a class="uk-position-cover" aria-label="@lang('Multiplane')" href="@route('/multiplane')"></a>
     </div>
 </div>
