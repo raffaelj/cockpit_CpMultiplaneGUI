@@ -72,49 +72,6 @@ class Admin extends \Cockpit\AuthController {
 
     }
 
-    public function settings() {
-
-        if (!$this->module('cockpit')->hasaccess('cpmultiplanegui', 'manage')) {
-            return $this->helper('admin')->denyRequest();
-        }
-
-        $config = $this->app->module('cpmultiplanegui')->getConfig();
-
-        $collections = $this->app->module('collections')->getCollectionsInGroup();
-
-        $fields = [];
-
-        foreach ($collections as $col) {
-            foreach ($col['fields'] as $field) {
-                $fields[] = $field['name'];
-            }
-        }
-
-        // field names for pre render selection
-        $fieldnames = array_keys(array_flip($fields));
-
-        return $this->render('cpmultiplanegui:views/settings.php', compact('config', 'fieldnames'));
-
-    }
-
-    public function saveConfig() {
-
-        // deprecated, keep as fallback until profiles are ready
-        // will be removed in v0.2.0
-
-        $config = $this->param('config', false);
-        $name   = $this->param('name', 'default');
-
-        if ($config) {
-            $this->app->storage->setKey('cockpit/options', 'multiplane', $config);
-        }
-
-        $this->app->module('cpmultiplanegui')->saveProfile($name, $config);
-
-        return $config;
-
-    }
-
     public function save_profile($name) {
 
         $profile = $this->param('profile', false);
