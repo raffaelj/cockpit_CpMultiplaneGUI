@@ -191,6 +191,7 @@ $this->module('cpmultiplanegui')->extend([
         if ($path = $this->findMultiplaneDir()) {
             $url = $this->app->pathToUrl($path);
         }
+        if ($url == '/') $url = '';
 
         return $absolute ? $this->app['site_url'] . $url : $url;
 
