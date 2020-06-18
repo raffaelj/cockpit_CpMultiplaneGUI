@@ -55,6 +55,9 @@
             color: #fff;
             background-color: #007fff;
         }
+        .uk-form-width-small {
+            width: 70px;
+        }
     </style>
     <div>
         <ul class="uk-breadcrumb">
@@ -144,7 +147,7 @@
                           <div class="uk-margin">
                               <div class="uk-flex uk-flex-middle uk-margin-small">
                                   <label class="uk-text-small">
-                                      @lang('Name of your pages collection')
+                                      @lang('Select pages collection')
                                   </label>
                                   <span class="uk-flex-item-1"></span>
                                   <!--<i class="uk-icon-info-circle uk-margin-small-left" title="@lang('Default: pages')" data-uk-tooltip></i>-->
@@ -160,7 +163,7 @@
                           <div class="uk-margin">
                               <div class="uk-flex uk-flex-middle uk-margin-small">
                                   <label class="uk-text-small">
-                                      @lang('Name of your posts collection')
+                                      @lang('Select posts collection')
                                   </label>
                                   <span class="uk-flex-item-1"></span>
                                   <!--<i class="uk-icon-info-circle uk-margin-small-left" title="@lang('Default: posts')" data-uk-tooltip></i>-->
@@ -177,7 +180,7 @@
                           <div class="uk-margin">
                               <div class="uk-flex uk-flex-middle uk-margin-small">
                                   <label class="uk-text-small">
-                                      @lang('Name of your site singleton')
+                                      @lang('Select site singleton')
                                   </label>
                                   <span class="uk-flex-item-1"></span>
                                   <!--<i class="uk-icon-info-circle uk-margin-small-left" title="@lang('Default: site')" data-uk-tooltip></i>-->
@@ -352,7 +355,7 @@
                             </div>
                         </div>
 
-                        <div class="uk-width-1-2" if="{ profile.isPreviewEnabled }">
+                        <div class="uk-width-small-1-2" if="{ profile.isPreviewEnabled }">
                             <label class="uk-text-small uk-text-middle">
                                 @lang('Method for content preview')
                             </label>
@@ -365,7 +368,7 @@
                             </div>
                         </div>
 
-                        <div class="uk-width-1-2 uk-margin" if="{ profile.isPreviewEnabled }">
+                        <div class="uk-width-small-1-2 uk-margin" if="{ profile.isPreviewEnabled }">
                             <label class="uk-text-small uk-margin-small">
                                 @lang('livePreviewToken')
                             </label>
@@ -378,7 +381,7 @@
 
                         </div>
 
-                        <div class="uk-width-1-2 uk-margin" if="{ profile.isPreviewEnabled }">
+                        <div class="uk-width-small-1-2 uk-margin" if="{ profile.isPreviewEnabled }">
                             <label class="uk-text-small uk-text-middle">
                                 @lang('Delay')
                             </label>
@@ -388,7 +391,14 @@
                             </div>
                         </div>
 
-                        <div class="uk-width-1-1" if="{ profile.isPreviewEnabled && profile.livePreviewToken }">
+                        <div class="uk-width-small-1-2 uk-margin" if="{ profile.isPreviewEnabled }">
+                            <field-boolean bind="profile.previewScripts" label="@lang('Reload scripts in preview')"></field-boolean>
+                            <div class="uk-text-small uk-margin">
+                                @lang('Enable this if your content changes dynamically after loading, e. g. with video links or galleries.')
+                            </div>
+                        </div>
+
+                        <div class="uk-width-1-1 uk-margin" if="{ profile.isPreviewEnabled && profile.livePreviewToken }">
 
                             <div class="uk-text-small">
                                 @lang('Copy this link to your collections content preview settings.')
@@ -405,7 +415,7 @@
 
                     <h3 class="uk-panel-title">@lang('Admin user interface')</h3>
 
-                    <field-boolean bind="profile.guiDisplayCustomNav" label="@lang('Display custom menu')"></field-boolean>
+                    <field-boolean bind="profile.guiDisplayCustomNav" label="@lang('Enable custom menu in top bar')"></field-boolean>
 
                 </div>
 
@@ -543,7 +553,7 @@
 
                                 <div each="{ v,k in lexy }" class="">
                                     <label class="uk-text-small uk-text-middle">{ k }</label>
-                                    <input type="number" placeholder="{ v }" bind="profile.lexy.{idx}.{k}" class="uk-form-width-mini" if="{ k != 'method' }" />
+                                    <input if="{ k != 'method' }" type="number" placeholder="{ v }" bind="profile.lexy.{idx}.{k}" class="uk-form-width-small" />
                                     <select if="{ k == 'method' }" bind="profile.lexy.{idx}.{k}" bind-event="input">
                                         <option value="" disabled selected="{ !profile.lexy || !profile.lexy[idx] || !profile.lexy[idx][k] ? true:false }">{v}</option>
                                         <option value="{ method }" each="{ method in thumbnailMethods }">{ method }</option>
