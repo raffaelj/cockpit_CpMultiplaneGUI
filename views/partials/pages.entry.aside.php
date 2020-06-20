@@ -48,6 +48,7 @@ $allowSubpages = true;
                     <field-boolean bind="entry.published" label="@lang('Published')" class="label-left"></field-boolean>
                 </div>
 
+                @if($pageTypeDetection == 'type')
                 <div class="uk-margin-top">
                     <label class="uk-text-middle uk-text-small">@lang('Page type')</label>
                     <select bind="entry.type" bind-event="input">
@@ -57,6 +58,7 @@ $allowSubpages = true;
                         @endforeach
                     </select>
                 </div>
+                @endif
             </div>
 
         </div>

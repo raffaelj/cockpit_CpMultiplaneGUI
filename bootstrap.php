@@ -67,7 +67,7 @@ $this->module('cpmultiplanegui')->extend([
 
         $profile  = include($metapath);
         $profile  = array_merge($profile, $data);
-        $export   = var_export($profile, true);
+        $export   = $this->app->helper('utils')->var_export($profile, true);
 
         if (!$this->app->helper('fs')->write($metapath, "<?php\nreturn {$export};")) {
             return false;
