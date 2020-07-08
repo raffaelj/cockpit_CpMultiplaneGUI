@@ -105,7 +105,7 @@ $allowSubpages = true;
                 <div if="{ mp_subpageToggle && entry.subpagemodule.active }">
                     <div class="uk-margin-small-top">
                         <div class="">
-                            <label class="uk-text-small">@lang('Custom route')</label>
+                            <label class="uk-text-small">@lang('Route')</label>
                             <input type="text" class="uk-form-width-small" bind="entry.subpagemodule.route{lang ? '_'+lang : ''}" />
                             <i class="uk-icon uk-icon-info-circle uk-margin-small-left uk-text-muted" title="@lang('Default: slug of this page')" data-uk-tooltip></i>
                         </div>
