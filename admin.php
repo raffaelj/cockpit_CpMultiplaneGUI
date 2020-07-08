@@ -193,6 +193,7 @@ $this->on('admin.init', function() {
     $this->on('cockpit.menu.system', function() {
 
         $url = $this->module('cpmultiplanegui')->getSiteUrl();
+        if ($url == '') $url = '/';
 
         $this->renderView('cpmultiplanegui:views/partials/system.menu.php', compact('url'));
 
