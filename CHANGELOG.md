@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.7
+
+* fixed wrong getImage url when using `COCKPIT_ENV_ROOT`
+* removed outdated settings page
+* added German translation
+* minor ui improvements
+
 ## 0.1.6
 
 * massive rewrite
