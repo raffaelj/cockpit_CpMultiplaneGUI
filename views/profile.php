@@ -401,9 +401,10 @@
                         <div class="uk-width-1-1 uk-margin" if="{ profile.isPreviewEnabled && profile.livePreviewToken }">
 
                             <div class="uk-text-small">
-                                @lang('Copy this link to your collections content preview settings.')
+                                @lang('Copy one of these links to your collections content preview settings.')
                             </div>
                             <code>{{ $app->module('cpmultiplanegui')->getSiteUrl(true) }}/livePreview?token={ profile.livePreviewToken }</code>
+                            <code>root://livePreview?token={ profile.livePreviewToken }</code>
 
                         </div>
 
