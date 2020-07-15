@@ -157,10 +157,7 @@ $this->module('cpmultiplanegui')->extend([
 
         if (!isset($config)) {
 
-            $config = array_replace_recursive(
-                $this->app->storage->getKey('cockpit/options', 'multiplane', []), // old ui
-                $this->app->retrieve('multiplane', []) // config file
-            );
+            $config = $this->app->retrieve('multiplane', []);
 
             if (isset($config['profile']) && $profile = $this->profile($config['profile'])) {
                 $config = array_replace_recursive($config, $profile);
