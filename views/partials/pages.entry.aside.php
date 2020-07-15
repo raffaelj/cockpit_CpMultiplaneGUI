@@ -83,7 +83,7 @@ $allowSubpages = true;
         @endif
 
         @if($allowSubpages && (($pageTypeDetection == 'type') || ($pageTypeDetection == 'collections' && count($collections))))
-        <div class="uk-margin">
+        <div class="uk-margin uk-width-medium-1-1 uk-width-small-1-2">
 { (entry.subpagemodule = entry.subpagemodule || {}) && '' }
             <cp-fieldcontainer>
 
@@ -98,7 +98,7 @@ $allowSubpages = true;
                     </select>
 
                     <span class="uk-flex-item-1"></span>
-                    <a class="uk-icon-chevron-circle-{ mp_subpageToggle ? 'up' : 'down' } uk-icon-hover" aria-label="@lang('Toggle dropdown')" onclick="{ mp_toggleSubpage }" if="{ entry.subpagemodule.active }"></a>
+                    <a class="uk-icon-chevron-circle-{ mp_subpageToggle ? 'up' : 'down' } uk-icon-hover uk-text-large uk-margin-small-left" aria-label="@lang('Toggle dropdown')" onclick="{ mp_toggleSubpage }" if="{ entry.subpagemodule.active }"></a>
                 </div>
 
                 @if($pageTypeDetection == 'collections' && count($collections))
@@ -147,14 +147,14 @@ $allowSubpages = true;
         </div>
         @endif
 
-        <div class="uk-panel uk-margin-small">
+        <div class="uk-panel uk-margin-small uk-width-medium-1-1 uk-width-small-1-2">
             <cp-fieldcontainer>
                 <a href="#" aria-label="@lang('Toggle dropdown to set special page types')" class="uk-flex uk-flex-bottom uk-link-muted" onclick="{ mp_toggleSpecialPageTypes }">
                     <span class="uk-text-small">@lang('Set special page types')</span>
                     <i class="uk-icon-home uk-margin-small-left uk-text-small uk-text-muted" if="{ entry.startpage }"></i>
                     <i class="uk-icon-shield uk-margin-small-left uk-text-small uk-text-muted" if="{ entry.privacypage }"></i>
                     <span class="uk-flex-item-1"></span>
-                    <i class="uk-icon-chevron-circle-{ mp_specialPageTypeToggle ? 'up' : 'down' } uk-icon-hover"></i>
+                    <i class="uk-icon-chevron-circle-{ mp_specialPageTypeToggle ? 'up' : 'down' } uk-icon-hover uk-text-large uk-margin-small-left"></i>
                 </a>
 
                 <div class="uk-margin-small" if="{ mp_specialPageTypeToggle }">

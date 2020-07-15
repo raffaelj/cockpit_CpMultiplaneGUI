@@ -11,7 +11,7 @@
  * [x] displaySearch
  * [ ] use (not sure, if I keep it)
  * [ ] sitemap --> defaults to "multiplane/use/collections"
- * [ ] search (needs to be less experimental before I build an user interface)
+ * [ ] search (needs to be less experimental before I build an user interface) --> defaults to "multiplane/use/collections"
  * [x] lexy
  * [x] theme
  * [ ] site_url --> not needed - $app->module('cpmultiplanegui')->getSiteUrl()
