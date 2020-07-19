@@ -255,23 +255,23 @@
                           <div class="uk-margin">
                               <div class="uk-flex uk-flex-middle uk-margin-small">
                                   <label class="uk-text-small">
+                                      @lang('Admin user interface')
+                                  </label>
+                                  <span class="uk-flex-item-1"></span>
+                                  
+                              </div>
+                              <field-boolean bind="profile.guiDisplayCustomNav" label="@lang('Enable custom menu in top bar')"></field-boolean>
+                          </div>
+
+                          <div class="uk-margin">
+                              <div class="uk-flex uk-flex-middle uk-margin-small">
+                                  <label class="uk-text-small">
                                       @lang('Breadcrumbs')
                                   </label>
                                   <span class="uk-flex-item-1"></span>
                                   <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('Display breadcrumbs')" data-uk-tooltip></i>
                               </div>
                               <field-boolean bind="profile.displayBreadcrumbs" label="@lang('On')"></field-boolean>
-                          </div>
-
-                          <div class="uk-margin">
-                              <div class="uk-flex uk-flex-middle uk-margin-small">
-                                  <label class="uk-text-small">
-                                      @lang('Seach bar')
-                                  </label>
-                                  <span class="uk-flex-item-1"></span>
-                                  <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('Display search bar')" data-uk-tooltip></i>
-                              </div>
-                              <field-boolean bind="profile.displaySearch" label="@lang('On')"></field-boolean>
                           </div>
 
                       </div>
@@ -414,9 +414,11 @@
 
                 <div class="uk-panel-box uk-panel-card uk-panel-header uk-margin">
 
-                    <h3 class="uk-panel-title">@lang('Admin user interface')</h3>
+                    <h3 class="uk-panel-title">@lang('Search')</h3>
 
-                    <field-boolean bind="profile.guiDisplayCustomNav" label="@lang('Enable custom menu in top bar')"></field-boolean>
+                    <field-set fields="{searchFields}" bind="profile.search"></field-set>
+
+                    @lang('For more granular settings use the config file.')
 
                 </div>
 
@@ -459,14 +461,6 @@
                     <div class="uk-text-small uk-margin-small">
                         @lang('For markdown fields or to normalize relative links in localized wysiwyg fields...')
                     </div>
-
-                </div>
-
-                <div class="uk-panel-box uk-panel-card uk-panel-header uk-margin">
-
-                    <h3 class="uk-panel-title">@lang('Search')</h3>
-
-                    to do...
 
                 </div>
 
@@ -602,22 +596,31 @@
         this.theme        = {};
 
         this.tab = 'main';
-        // this.tab = 'themes';
+//         this.tab = 'other';
+//         this.tab = 'themes';
 
         this.thumbnailMethods = ['thumbnail', 'bestFit'];
 
         this.selectCollectionsOptions = {};
         this.collections.forEach(function(e) {
-            $this.selectCollectionsOptions[e.name] = e.label;
+            $this.selectCollectionsOptions[e.name] = e.label || e.name;
         });
         this.selectSingletonsOptions = {};
         this.singletons.forEach(function(e) {
-            $this.selectSingletonsOptions[e.name] = e.label;
+            $this.selectSingletonsOptions[e.name] = e.label || e.name;
         });
         this.selectFormsOptions = {};
         this.forms.forEach(function(e) {
-            $this.selectFormsOptions[e.name] = e.label;
+            $this.selectFormsOptions[e.name] = e.label || e.name;
         });
+
+        this.searchFields = [
+            {
+                name: 'enabled',
+                label: App.i18n.get('Enabled'),
+                type: 'boolean',
+            },
+        ];
 
         this.on('mount', function() {
 
