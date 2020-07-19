@@ -38,7 +38,7 @@ $this->module('cpmultiplanegui')->extend([
         $profile = array_replace_recursive([
             'name'      => $name,
             'label'     => $name,
-            '_id'       => uniqid($name),
+            '_id'       => $name,
             '_created'  => $time,
             '_modified' => $time
         ], $data);
@@ -200,7 +200,7 @@ $this->module('cpmultiplanegui')->extend([
 
 ]);
 
-// pass config to UniqueSlugs addon if not already present
+// pass config to UniqueSlugs addon if not already present, requires UniqueSlugs version 0.5.3
 $this->on('cockpit.bootstrap', function() {
 
     if (!isset($this['modules']['uniqueslugs'])) return;
@@ -230,7 +230,7 @@ $this->on('cockpit.bootstrap', function() {
 
     $this->set('unique_slugs', $uConfig);
 
-}, 100);
+}, 200); // change config with priority higher than 100
 
 // ACL
 $app('acl')->addResource('cpmultiplanegui', ['create', 'delete', 'manage']);
