@@ -1,8 +1,9 @@
 <?php
 
-$pageTypeDetection = $app->retrieve('multiplane/pageTypeDetection', 'collections');
+$config = $app->module('cpmultiplanegui')->getConfig();
 
-$pageTypes = $app->retrieve('multiplane/pageTypes', ['page', 'post']);
+$pageTypeDetection = $config['pageTypeDetection'] ?? 'collections';
+$pageTypes         = $config['pageTypes'] ?? ['page', 'post'];
 
 $allowSubpages = true;
 
@@ -33,7 +34,7 @@ $allowSubpages = true;
 </style>
 
 <div id="multiplane_sidebar" class="uk-form uk-margin">
-
+{{ $pageTypeDetection }}
     <cp-fieldcontainer>
         <div class="uk-clearfix">
             <div class="uk-float-left">
@@ -90,19 +91,21 @@ $allowSubpages = true;
                 <div class="{ entry.subpagemodule.active && 'uk-flex uk-flex-bottom' }">
                     <field-boolean bind="entry.subpagemodule.active" label="@lang('Sub pages')" class="uk-margin-small uk-text-middle small"></field-boolean>
 
+                  @if($pageTypeDetection == 'collections')
                     <select bind="entry.subpagemodule.collection" aria-label="@lang('Select a collection for sub pages')" class="uk-margin-small uk-margin-small-left" title="@lang('Select collection')" if="{ entry.subpagemodule.active }">
                         <option value=""></option>
                         @foreach($collections as $col)
                         <option value="{{ $col['name'] }}">{{ $col['label'] }}</option>
                         @endforeach
                     </select>
+                  @endif
 
                     <span class="uk-flex-item-1"></span>
                     <a class="uk-icon-chevron-circle-{ mp_subpageToggle ? 'up' : 'down' } uk-icon-hover uk-text-large uk-margin-small-left" aria-label="@lang('Toggle dropdown')" onclick="{ mp_toggleSubpage }" if="{ entry.subpagemodule.active }"></a>
                 </div>
 
-                @if($pageTypeDetection == 'collections' && count($collections))
                 <div if="{ mp_subpageToggle && entry.subpagemodule.active }">
+                @if($pageTypeDetection == 'collections' && count($collections))
                     <div class="uk-margin-small-top">
                         <div class="">
                             <label class="uk-text-small">@lang('Route')</label>
@@ -110,6 +113,15 @@ $allowSubpages = true;
                             <i class="uk-icon uk-icon-info-circle uk-margin-small-left uk-text-muted" title="@lang('Default: slug of this page')" data-uk-tooltip></i>
                         </div>
                     </div>
+
+                @elseif($pageTypeDetection == 'type')
+<!--                 <div if="{ mp_subpageToggle }"> -->
+                    <div class="uk-margin-small-top" if="{ entry.subpagemodule.active }">
+                        <label class="uk-text-small">@lang('Type')</label>
+                        <field-text bind="entry.subpagemodule.type"></field-text>
+                    </div>
+<!--                 </div> -->
+                @endif
 
                     <div class="uk-margin-small-top">
                         <cp-fieldcontainer>
@@ -133,15 +145,6 @@ $allowSubpages = true;
                         </cp-fieldcontainer>
                     </div>
                 </div>
-
-                @elseif($pageTypeDetection == 'type')
-                <div if="{ mp_subpageToggle }">
-                    <div class="uk-margin-small-top" if="{ entry.subpagemodule.active }">
-                        <label class="uk-text-small">@lang('Type')</label>
-                        <field-text bind="entry.subpagemodule.type"></field-text>
-                    </div>
-                </div>
-                @endif
 
             <cp-fieldcontainer>
         </div>
