@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0
+
+* fixed empty url link in system menu
+* improved ui
+* removed more code parts from deprecated settings
+* added UniqueSlugs auto config
+* compatible with CpMultiplane 0.2.0
+
 ## 0.1.7
 
 * fixed wrong getImage url when using `COCKPIT_ENV_ROOT`
