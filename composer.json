@@ -1,0 +1,23 @@
+{
+    "name": "raffaelj/cockpit-cpmultiplanegui",
+    "type": "cockpit-module",
+    "description": "UI tweaks and settings for CpMultiplane frontend with Cockpit CMS",
+    "keywords": ["cockpit", "cpmultiplane"],
+    "homepage": "https://github.com/raffaelj/cockpit_CpMultiplaneGUI",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Raffael Jesche",
+            "homepage": "https://www.rlj.me"
+        }
+    ],
+    "require": {
+        "composer/installers": "^1.9"
+    },
+    "config": {
+        "vendor-dir": "lib/vendor"
+    },
+    "extra": {
+        "installer-name": "CpMultiplaneGUI"
+    }
+}
