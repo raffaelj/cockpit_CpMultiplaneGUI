@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1
+
+* added `composer.json`
+
 ## 0.2.0
 
 * fixed empty url link in system menu
