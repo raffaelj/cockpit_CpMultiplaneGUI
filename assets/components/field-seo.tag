@@ -1,7 +1,7 @@
 /**
  * SEO field for Cockpit CMS
  * 
- * @version   0.1.2
+ * @version   0.1.3
  * @author    Raffael Jesche
  * @license   MIT
  * 
@@ -403,7 +403,7 @@
             if (this.fallback.description) {
                 var name = this.fallback.description;
                 if (this.lang && this.localize.description) name += '_' + this.lang;
-                this.guess.description = this.truncate(App.Utils.stripTags(
+                this.guess.description = this.truncate(this.stripTags(
                                          this.$root[this.entryName][name]), 400);
             }
 
@@ -602,6 +602,23 @@
                 }
             }
             return {};
+        }
+
+        stripTags(str) {
+
+            if (typeof str != 'string' && Array.isArray(str)) {
+                // content may be a repeater, try to use the first field
+                if (str[0] && str[0].value && typeof str[0].value == 'string') {
+                    str = str[0].value;
+                }
+
+                else {
+                    str = '';
+                }
+            }
+
+            return App.Utils.stripTags(str);
+
         }
 
         truncate(str = '', length = 100) {
