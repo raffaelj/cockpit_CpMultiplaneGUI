@@ -139,6 +139,10 @@ $allowSubpages = true;
                                 <div class="uk-margin-small-top">
                                     <field-boolean bind="entry.subpagemodule.pagination" label="@lang('Show pagination')" class="small"></field-boolean>
                                 </div>
+                                <div class="uk-margin-small-top">
+                                    <label class="uk-text-small">@lang('Custom sort order')</label>
+                                    <field-key-value-pair bind="entry.subpagemodule.customsort"></field-key-value-pair>
+                                </div>
                             </div>
                         </cp-fieldcontainer>
                     </div>
