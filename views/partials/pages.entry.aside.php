@@ -34,7 +34,7 @@ $allowSubpages = true;
 </style>
 
 <div id="multiplane_sidebar" class="uk-form uk-margin">
-{{ $pageTypeDetection }}
+
     <cp-fieldcontainer>
         <div class="uk-clearfix">
             <div class="uk-float-left">
@@ -115,12 +115,10 @@ $allowSubpages = true;
                     </div>
 
                 @elseif($pageTypeDetection == 'type')
-<!--                 <div if="{ mp_subpageToggle }"> -->
                     <div class="uk-margin-small-top" if="{ entry.subpagemodule.active }">
                         <label class="uk-text-small">@lang('Type')</label>
                         <field-text bind="entry.subpagemodule.type"></field-text>
                     </div>
-<!--                 </div> -->
                 @endif
 
                     <div class="uk-margin-small-top">
