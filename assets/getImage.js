@@ -172,7 +172,9 @@ App.$(document).on('init-wysiwyg-editor', function(e, editor) {
     if (editor.settings.modified === undefined) {
 
         // enable plugin
-        editor.settings.plugins = editor.settings.plugins + ' mpgetimage';
+        if (!editor.settings.plugins.match(/mpgetimage/)) {
+            editor.settings.plugins = editor.settings.plugins + ' mpgetimage';
+        }
 
         // add toolbar button
         if (typeof editor.settings.toolbar == 'undefined') {
@@ -181,7 +183,9 @@ App.$(document).on('init-wysiwyg-editor', function(e, editor) {
                                     + 'aligncenter alignright alignjustify | '
                                     + 'bullist numlist outdent indent | link image';
         }
-        editor.settings.toolbar += ' | mpgetimage';
+        if (!editor.settings.toolbar.match(/mpgetimage/)) {
+            editor.settings.toolbar += ' | mpgetimage';
+        }
 
     }
 
