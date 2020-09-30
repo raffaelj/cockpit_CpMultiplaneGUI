@@ -404,6 +404,7 @@
                                 @lang('Copy one of these links to your collections content preview settings.')
                             </div>
                             <code>{{ $app->module('cpmultiplanegui')->getSiteUrl(true) }}/livePreview?token={ profile.livePreviewToken }</code>
+                            <br>
                             <code>root://livePreview?token={ profile.livePreviewToken }</code>
 
                         </div>

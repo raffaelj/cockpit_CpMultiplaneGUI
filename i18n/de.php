@@ -41,7 +41,7 @@
   'Edit/Insert image' => 'Bild bearbeiten/einfügen',
   'Enable content preview' => 'Inhaltsvorschau aktivieren',
   'Enable sidebar' => 'Seitenleiste aktivieren',
-  'Enable this if your content changes dynamically after loading, e. g. with video links or galleries.' => 'Aktiviere den Regler, wenn sich deine Inhalte dynamisch ändern, z. B. mit Video-Links oder Gallerien.',
+  'Enable this if your content changes dynamically after loading, e. g. with video links or galleries.' => 'Aktiviere den Regler, wenn sich deine Inhalte dynamisch ändern, z. B. mit Video-Links oder Galerien.',
   'Enable, if this is your privacy page. This info is needed to link to this page from dynamic content, e. g. cookie banner or contact form.' => 'Wenn das deine Privatsphäreseite ist, aktiviere den Regler. Diese Info ist nötig um für einige dynamische Inhalte auf die richtige Seite zu verlinken (z. B. Cookie-Banner, Kontakformular).',
   'Enter ip addresses, that can access the page while maintenance mode is enabled. Separate them with whitespaces.' => 'Gib IP-Adressen ein, die auf die Seite zugreifen können, während der Wartungsmodus aktiv ist.',
   'Field name for slugs' => 'Feldname für Slugs',
