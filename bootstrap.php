@@ -172,9 +172,25 @@ $this->module('cpmultiplanegui')->extend([
     'findMultiplaneDir' => function() {
 
         // to do...
+        $checkFile = '/modules/Multiplane/bootstrap.php';
 
-        if (file_exists(dirname(COCKPIT_DIR) . '/modules/Multiplane/bootstrap.php')) {
-            return dirname(COCKPIT_DIR);
+        if (\defined('MP_COCKPIT_ADMIN_ROUTE') && \basename(\dirname(COCKPIT_DIR)) == 'lib') {
+
+            // mp lib skeleton -  I expect Cockpit and CpMultiplane in parallel inside lib folder
+
+            $checkDir = dirname(COCKPIT_DIR) . '/CpMultiplane';
+
+            if (\file_exists($checkDir . $checkFile)) {
+                return $checkDir;
+            }
+
+        }
+
+        elseif (\file_exists(\dirname(COCKPIT_DIR) . $checkFile)) {
+
+            // default usage - I expect Cockpit to be in a sub folder of CpMultiplane
+
+            return \dirname(COCKPIT_DIR);
         }
 
         return false;
@@ -186,6 +202,11 @@ $this->module('cpmultiplanegui')->extend([
         $url = '';
 
         if ($path = $this->findMultiplaneDir()) {
+
+            if (\defined('MP_COCKPIT_ADMIN_ROUTE') && \basename(\dirname(COCKPIT_DIR)) == 'lib') {
+                $path = \dirname(\dirname($path));
+            }
+
             $url = $this->app->pathToUrl($path);
         }
         if ($url == '/') $url = '';
