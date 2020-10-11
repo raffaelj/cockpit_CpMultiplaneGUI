@@ -114,7 +114,7 @@ class Admin extends \Cockpit\AuthController {
         }
 
         try {
-            
+
             define('MP_SELF_EXPORT', true);
 
             include($mpdir . '/bootstrap.php');
