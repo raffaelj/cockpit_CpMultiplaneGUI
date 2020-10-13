@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.2
+
+* fixed js error in seo field if description fallback field is no string
+* fixed duplicated buttons in wysiwyg editor if editor is rebuild --> for compatibility with BlockEditor addon
+* added custom sort option for posts
+* improved path guessing to communicate with CpMultiplane
+
 ## 0.2.1
 
 * added `composer.json`
