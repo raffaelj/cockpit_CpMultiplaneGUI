@@ -1,8 +1,8 @@
 # CpMultiplaneGUI
 
-
 Addon for [Cockpit CMS][1], that adds some ui options for the [CpMultiplane][1] frontend.
 
+* adds profiles for easier config management
 * adds a few fields to the sidebar, so you don't have to define them in your collection definitions
 * some gui tweaks for easier access
 * custom fields
@@ -53,8 +53,7 @@ composer require --ignore-platform-reqs raffaelj/cockpit-cpmultiplanegui
 
 ## To do
 
-* [ ] setup - Create collections, singletons and forms from default templates
+* [ ] setup via gui - create collections, singletons and forms from default templates
 
 [1]: https://github.com/agentejo/cockpit/
 [2]: https://github.com/raffaelj/CpMultiplane
-[3]: https://github.com/raffaelj/cockpit_CpMultiplaneBundle

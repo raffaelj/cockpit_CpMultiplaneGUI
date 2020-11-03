@@ -512,6 +512,8 @@
                             <dt>@lang('Author')</dt><dd if="{ theme.info.author && typeof theme.info.author == 'string' }">{ theme.info.author }</dd>
                         </dl>
 
+                        <p if="{ theme.info && theme.info.description }">{ theme.info.description }</p>
+
                         <div>
                             <span class="uk-badge uk-margin-small-right" each="{ k in theme.info.keywords }" if="{ theme.info.keywords && Array.isArray(theme.info.keywords) }">{ k }</span>
                         </div>
