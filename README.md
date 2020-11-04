@@ -1,6 +1,6 @@
 # CpMultiplaneGUI
 
-Addon for [Cockpit CMS][1], that adds some ui options for the [CpMultiplane][1] frontend.
+Addon for [Cockpit CMS][1], that adds some ui options for the [CpMultiplane][2] frontend.
 
 * adds profiles for easier config management
 * adds a few fields to the sidebar, so you don't have to define them in your collection definitions
