@@ -85,7 +85,7 @@ $allowSubpages = true;
 
         @if($allowSubpages && (($pageTypeDetection == 'type') || ($pageTypeDetection == 'collections' && count($collections))))
         <div class="uk-margin uk-width-medium-1-1 uk-width-small-1-2">
-{ (entry.subpagemodule = entry.subpagemodule || {}) && '' }
+{ (entry.subpagemodule = !entry.subpagemodule || Array.isArray(entry.subpagemodule) ? {} : entry.subpagemodule) && '' }
             <cp-fieldcontainer>
 
                 <div class="{ entry.subpagemodule.active && 'uk-flex uk-flex-bottom' }">
@@ -117,7 +117,12 @@ $allowSubpages = true;
                 @elseif($pageTypeDetection == 'type')
                     <div class="uk-margin-small-top" if="{ entry.subpagemodule.active }">
                         <label class="uk-text-small">@lang('Type')</label>
-                        <field-text bind="entry.subpagemodule.type"></field-text>
+                        <select bind="entry.subpagemodule.type" bind-event="input">
+                            <option value=""></option>
+                            @foreach($pageTypes as $type)
+                            <option value="{{ $type }}">@lang(ucfirst($type))</option>
+                            @endforeach
+                        </select>
                     </div>
                 @endif
 
