@@ -6,6 +6,10 @@ class Admin extends \Cockpit\AuthController {
 
     public function index() {
 
+        if (!$this->module('cockpit')->hasaccess('cpmultiplanegui', 'manage')) {
+            return $this->helper('admin')->denyRequest();
+        }
+
         $profiles = $this->app->module('cpmultiplanegui')->profiles();
 
         $currentProfile = $this->app->retrieve('multiplane/profile', '');
@@ -16,7 +20,7 @@ class Admin extends \Cockpit\AuthController {
 
     public function profile($name = null) {
 
-        if (!$name && !$this->module('cockpit')->hasaccess('cpmultiplanegui', 'manage')) {
+        if (!$this->module('cockpit')->hasaccess('cpmultiplanegui', 'manage')) {
             return $this->helper('admin')->denyRequest();
         }
 

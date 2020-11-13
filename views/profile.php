@@ -693,9 +693,9 @@
             $this.refs.inspect.show($this.profile);
             $this.update();
         }
-        
+
         get_multiplane_config() {
-            
+
             App.request('/multiplane/get_multiplane_config').then(function(data) {
 
                 if (data.themes) {

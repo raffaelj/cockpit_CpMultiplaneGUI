@@ -1,6 +1,3 @@
-<script>
-    window.__profiles = {{ json_encode($profiles) }};
-</script>
 <div>
     <ul class="uk-breadcrumb">
         <li class="uk-active"><span>@lang('Multiplane')</span></li>
@@ -30,7 +27,14 @@
 
     <div class="uk-container uk-container-center">
 
-        <div class="uk-grid uk-grid-match uk-grid-gutter uk-grid-width-medium-1-2 uk-grid-width-xlarge-1-3 uk-margin-top">
+        <div if="{ !hasProfiles }">
+            <div class="uk-text-center">
+                @lang('No profiles')
+                <a class="uk-button uk-button-link uk-button-primary" href="@route('/multiplane/profile')">@lang('Add one')</a>
+            </div>
+        </div>
+
+        <div if="{ hasProfiles }" class="uk-grid uk-grid-match uk-grid-gutter uk-grid-width-medium-1-2 uk-grid-width-xlarge-1-3 uk-margin-top">
 
             <div each="{ profile, idx in profiles }">
                 <div class="uk-panel uk-panel-box uk-panel-card uk-panel-card-hover">
@@ -84,9 +88,9 @@
 
         var $this = this;
 
-        this.profiles = window.__profiles;
-
-        currentProfile = '{{ $currentProfile }}';
+        this.profiles       = {{ empty($profiles) ? '{}' : json_encode($profiles, true) }};
+        this.hasProfiles    = {{ empty($profiles) ? 'false' : 'true' }};
+        this.currentProfile = '{{ $currentProfile }}';
 
         // this.on('mount', function() {
             // this.update();
@@ -105,6 +109,8 @@
                     App.ui.notify("Profile removed", "success");
 
                     delete $this.profiles[e.item.idx];
+
+                    if (!Object.keys($this.profiles).length) $this.hasProfiles = false;
 
                     $this.update();
 
