@@ -12,7 +12,7 @@ class Admin extends \Cockpit\AuthController {
 
         return $this->render('cpmultiplanegui:views/index.php', compact('profiles', 'currentProfile'));
 
-    }
+    } // end of index()
 
     public function profile($name = null) {
 
@@ -35,7 +35,7 @@ class Admin extends \Cockpit\AuthController {
             ];
         }
         // field names for pre render selection
-        $fieldnames = array_keys(array_flip($fields));
+        $fieldnames = \array_keys(\array_flip($fields));
 
         $_singletons = $this->app->module('singletons')->getSingletonsInGroup();
         $singletons  = [];
@@ -70,7 +70,7 @@ class Admin extends \Cockpit\AuthController {
             'themes'
         ));
 
-    }
+    } // end of profile()
 
     public function save_profile($name) {
 
@@ -86,7 +86,7 @@ class Admin extends \Cockpit\AuthController {
 
         return $this->app->module('cpmultiplanegui')->saveProfile($name, $profile);
 
-    }
+    } // end of save_profile()
 
     // delete multiplane key in cockpit/options from old ui
     public function clean_database() {
@@ -99,7 +99,7 @@ class Admin extends \Cockpit\AuthController {
 
         return compact('return');
 
-    }
+    } // end of clean_database()
 
     public function get_multiplane_config() {
 
@@ -115,7 +115,7 @@ class Admin extends \Cockpit\AuthController {
 
         try {
 
-            define('MP_SELF_EXPORT', true);
+            \define('MP_SELF_EXPORT', true);
 
             include($mpdir . '/bootstrap.php');
 
@@ -125,6 +125,6 @@ class Admin extends \Cockpit\AuthController {
             return ['error' => $e->getMessage()];
         }
 
-    }
+    } // end of get_multiplane_config()
 
 }
