@@ -10,8 +10,11 @@ App.$(document).on('init-wysiwyg-editor', function(e, editor) {
                 height = '',
                 method = 'bestFit'
                 quality = '80'
-                options = [],
-                asset = {},
+                options = {
+                    selected: [],
+                    typefilter: ''
+                },
+                currentAsset = {},
                 asset_id = null,
                 src = node.getAttribute('src');
 
@@ -73,7 +76,7 @@ App.$(document).on('init-wysiwyg-editor', function(e, editor) {
 
             selectButton.on('click', function() {
 
-                if (!asset || !asset.mime) {
+                if (!currentAsset || !currentAsset.mime) {
                     App.ui.notify('No image selected', 'danger');
                     return;
                 }
@@ -84,11 +87,11 @@ App.$(document).on('init-wysiwyg-editor', function(e, editor) {
                     quality = dialog.dialog.find('[data-quality]')[0].value,
                     content = '';
 
-                if (asset.mime.match(/^image\//)) {
+                if (currentAsset.mime.match(/^image\//)) {
 
                     // might break with sub folders... needs some more tests
                     // var src = SITE_URL + '/getImage?src=' + asset._id;
-                    var src = MP_SITE_URL + '/getImage?src=' + asset._id;
+                    var src = MP_SITE_URL + '/getImage?src=' + currentAsset._id;
 
                     // skip default and empty values
                     if (!!width.trim() && width != '800')       src += '&w=' + width;
@@ -96,10 +99,10 @@ App.$(document).on('init-wysiwyg-editor', function(e, editor) {
                     if (!!method.trim() && method != 'bestFit') src += '&m=' + method;
                     if (!!quality.trim() && quality != '80')    src += '&q=' + quality;
 
-                    content = '<img src="'+ src +'" alt="'+(asset.title || 'image')+'">';
+                    content = '<img src="'+ src +'" alt="'+(currentAsset.title || 'image')+'">';
                 } else {
                     // to do...
-                    content = '<a href="' + ASSETS_URL+asset.path + '">'+asset.title+'<a>';
+                    content = '<a href="' + ASSETS_URL+currentAsset.path + '">'+currentAsset.title+'<a>';
                 }
 
                 ed.insertContent(content);
@@ -116,7 +119,7 @@ App.$(document).on('init-wysiwyg-editor', function(e, editor) {
                     s = s.slice(-1);
                     assetsComponent.selected = s;
 
-                    asset = s[0];
+                    currentAsset = s[0];
 
                 }
 
@@ -132,7 +135,7 @@ App.$(document).on('init-wysiwyg-editor', function(e, editor) {
                             return obj._id === asset_id;
                         });
 
-                        asset = selectedAsset;
+                        currentAsset = selectedAsset;
 
                         assetsComponent.selected.push(selectedAsset);
                         assetsComponent.update();
