@@ -178,6 +178,8 @@ $this->module('cpmultiplanegui')->extend([
 
     'findMultiplaneDir' => function() {
 
+        if (\defined('MP_DIR')) return MP_DIR;
+
         // to do...
         $checkFile = '/modules/Multiplane/bootstrap.php';
 
@@ -226,6 +228,7 @@ $this->module('cpmultiplanegui')->extend([
 
 // load autoconfig
 include_once(__DIR__.'/autoconfig/uniqueslugs.php');
+include_once(__DIR__.'/autoconfig/imageresize.php');
 
 // ACL
 $app('acl')->addResource('cpmultiplanegui', ['create', 'delete', 'manage']);
