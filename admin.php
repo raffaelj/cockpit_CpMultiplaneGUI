@@ -20,7 +20,8 @@ $this->on('admin.init', function() {
         'cpmultiplanegui:assets/components/field-simple-gallery.tag',
         'cpmultiplanegui:assets/components/field-seo.tag',
         'cpmultiplanegui:assets/components/field-key-value-pair.tag',
-        'cpmultiplanegui:assets/getImage.js'
+        'cpmultiplanegui:assets/components/getimage-sizes.tag',
+        'cpmultiplanegui:assets/getImage.js',
     ]);
 
     // bind admin routes
