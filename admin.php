@@ -225,6 +225,11 @@ $this->on('admin.init', function() {
 
     }
 
+    // don't index cockpit in search engines
+    $this->on('app.login.header', function() {
+        echo '<meta name="robots" content="noindex,nofollow">';
+    });
+
 });
 
 // unique check for startpage toggle
