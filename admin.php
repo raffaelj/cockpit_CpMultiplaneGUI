@@ -16,7 +16,7 @@ $this->on('admin.init', function() {
     });
 
     // add custom assets
-    $this('admin')->addAssets([
+    $this->helper('admin')->addAssets([
         'cpmultiplanegui:assets/components/field-simple-gallery.tag',
         'cpmultiplanegui:assets/components/field-seo.tag',
         'cpmultiplanegui:assets/components/field-key-value-pair.tag',
