@@ -13,9 +13,18 @@ $this->on('cockpit.bootstrap', function() {
 
     $uConfig = $this->retrieve('unique_slugs');
 
+    $fieldNames = $this->module('cpmultiplanegui')->fieldNames;
+    if (isset($config['fieldNames']) && \is_array($config['fieldNames'])) {
+        foreach ($config['fieldNames'] as $fieldName => $replacement) {
+            if (\is_string($replacement) && !empty(\trim($replacement))) {
+                $fieldNames[$fieldName] = \trim($replacement);
+            }
+        }
+    }
+
     foreach ($config['use']['collections'] as $col) {
 
-        $fieldName = 'title';
+        $fieldName = $fieldNames['title'];
 
         if (!isset($uConfig['collections'][$col])) {
             $uConfig['collections'][$col] = $fieldName;

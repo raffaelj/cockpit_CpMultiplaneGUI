@@ -249,11 +249,22 @@ $this->on('admin.init', function() {
 
     $this->on("collections.save.before.{$pages}", function($name, &$entry, $isUpdate) {
 
-        if (isset($entry['startpage']) && $entry['startpage'] == true) {
+        $fieldNames = $this->module('cpmultiplanegui')->fieldNames;
+        if (isset($config['fieldNames']) && \is_array($config['fieldNames'])) {
+            foreach ($config['fieldNames'] as $fieldName => $replacement) {
+                if (\is_string($replacement) && !empty(\trim($replacement))) {
+                    $fieldNames[$fieldName] = \trim($replacement);
+                }
+            }
+        }
+
+        $startpageName = $fieldNames['startpage'];
+
+        if (isset($entry[$startpageName]) && $entry[$startpageName] == true) {
 
             // check, if another page exists, that was the startpage before
 
-            $filter = ['startpage' => true];
+            $filter = [$startpageName => true];
 
             if ($isUpdate && isset($entry['_id'])) {
                 $filter['_id'] = ['$not' => $entry['_id']];
@@ -265,7 +276,7 @@ $this->on('admin.init', function() {
 
                 // set old startpage to false
 
-                $check['startpage'] = false;
+                $check[$startpageName] = false;
 
                 $this->module('collections')->save($name, [$check], ['revision' => true]);
 
