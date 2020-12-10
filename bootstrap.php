@@ -33,6 +33,7 @@ $this->module('cpmultiplanegui')->extend([
         'logo'              => 'logo',            // only in site
         'tags'              => 'tags',
         'category'          => 'category',        // not used for now, will be like tags
+        'contactform'       => 'contactform',
     ],
 
     'createProfile' => function($name, $data = []) {

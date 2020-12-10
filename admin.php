@@ -128,7 +128,6 @@ $this->on('admin.init', function() {
     $this->on('collections.entry.aside', function($collection) {
 
         $pages = $this->retrieve('multiplane/pages', 'pages');
-        $posts = $this->retrieve('multiplane/pages', 'posts');
 
         $_collection = $this->module('collections')->collection($collection);
 
@@ -137,6 +136,15 @@ $this->on('admin.init', function() {
             $type = $_collection['multiplane']['type'] ?? 'subpages';
 
             $config = $this->module('cpmultiplanegui')->getConfig();
+
+            $fieldNames = $this->module('cpmultiplanegui')->fieldNames;
+            if (isset($config['fieldNames']) && \is_array($config['fieldNames'])) {
+                foreach ($config['fieldNames'] as $fieldName => $replacement) {
+                    if (\is_string($replacement) && !empty(\trim($replacement))) {
+                        $fieldNames[$fieldName] = \trim($replacement);
+                    }
+                }
+            }
 
             if ($type == 'pages') {
 
@@ -179,11 +187,11 @@ $this->on('admin.init', function() {
                     return mb_strtolower($a['label']) <=> mb_strtolower($b['label']);
                 });
 
-                $this->renderView('cpmultiplanegui:views/partials/pages.entry.aside.php', compact('forms', 'collections'));
+                $this->renderView('cpmultiplanegui:views/partials/pages.entry.aside.php', compact('forms', 'collections', 'config', 'fieldNames'));
             }
 
             else {
-                $this->renderView('cpmultiplanegui:views/partials/posts.entry.aside.php');
+                $this->renderView('cpmultiplanegui:views/partials/posts.entry.aside.php', compact('config', 'fieldNames'));
             }
 
         }

@@ -30,7 +30,7 @@
 
         <div class="uk-margin">
             <div class="uk-margin-small-top">
-                <field-boolean bind="entry.published" label="@lang('Published')"></field-boolean>
+                <field-boolean bind="entry.{{ $fieldNames['published'] }}" label="@lang('Published')"></field-boolean>
             </div>
         </div>
 
