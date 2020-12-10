@@ -63,6 +63,8 @@ class Admin extends \Cockpit\AuthController {
             ];
         }
 
+        $fieldNames = $this->app->module('cpmultiplanegui')->fieldNames;
+
         $themes = [];
 
         return $this->render('cpmultiplanegui:views/profile.php', compact(
@@ -71,6 +73,7 @@ class Admin extends \Cockpit\AuthController {
             'collections',
             'singletons',
             'forms',
+            'fieldNames',
             'themes'
         ));
 

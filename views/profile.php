@@ -132,6 +132,7 @@
                     <!--<li class="{ tab=='nav' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="nav">@lang('Menus')</a></li>-->
                     <li class="{ tab=='other' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="other">@lang('Other')</a></li>
                     <li class="{ tab=='themes' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="themes">@lang('Themes')</a></li>
+                    <li class="{ tab=='fieldNames' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="fieldNames">@lang('Field mapping')</a></li>
                 </ul>
             </div>
 
@@ -150,26 +151,8 @@
                                       @lang('Select pages collection')
                                   </label>
                                   <span class="uk-flex-item-1"></span>
-                                  <!--<i class="uk-icon-info-circle uk-margin-small-left" title="@lang('Default: pages')" data-uk-tooltip></i>-->
                               </div>
                               <select bind="profile.pages" bind-event="input" class="uk-width-1-1">
-                                  <option value=""></option>
-                                  @foreach($collections as $c)
-                                  <option value="{{ $c['name'] }}">{{ $c['label'] }}</option>
-                                  @endforeach
-                              </select>
-                          </div>
-
-                          <div class="uk-margin">
-                              <div class="uk-flex uk-flex-middle uk-margin-small">
-                                  <label class="uk-text-small">
-                                      @lang('Select posts collection')
-                                  </label>
-                                  <span class="uk-flex-item-1"></span>
-                                  <!--<i class="uk-icon-info-circle uk-margin-small-left" title="@lang('Default: posts')" data-uk-tooltip></i>-->
-                              </div>
-
-                              <select bind="profile.posts" bind-event="input" class="uk-width-1-1">
                                   <option value=""></option>
                                   @foreach($collections as $c)
                                   <option value="{{ $c['name'] }}">{{ $c['label'] }}</option>
@@ -183,7 +166,6 @@
                                       @lang('Select site singleton')
                                   </label>
                                   <span class="uk-flex-item-1"></span>
-                                  <!--<i class="uk-icon-info-circle uk-margin-small-left" title="@lang('Default: site')" data-uk-tooltip></i>-->
                               </div>
 
                               <select bind="profile.siteSingleton" bind-event="input" class="uk-width-1-1">
@@ -194,7 +176,7 @@
                               </select>
                           </div>
 
-                          <div class="uk-margin">
+<!--                          <div class="uk-margin">
                               <div class="uk-flex uk-flex-middle uk-margin-small">
                                   <label class="uk-text-small">
                                       @lang('Field name for slugs')
@@ -203,7 +185,7 @@
                                   <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('Default: _id (no slugs)')" data-uk-tooltip></i>
                               </div>
                               <input type="text" class="uk-width-1-1" bind="profile.slugName" />
-                          </div>
+                          </div>-->
 
                           <div class="uk-margin">
                               <div class="uk-flex uk-flex-middle uk-margin-small">
@@ -520,7 +502,7 @@
                     </div>
 
                     <div class="uk-width-medium-1-2">
-                        <cp-thumbnail src="{ theme.image }" if="{ theme.image }" width="600px" height="400px"></cp-thumbnail
+                        <cp-thumbnail src="{ theme.image }" if="{ theme.image }" width="600px" height="400px"></cp-thumbnail>
                     </div>
                 </div>
 
@@ -566,6 +548,19 @@
 
             </div>
 
+
+
+            <div class="uk-form-horizontal uk-width-1-1" show="{tab=='fieldNames'}">
+
+                <div class="uk-form-row" each="{ field, idx in fieldNames }">
+                    <label class="uk-form-label { (!profile.fieldNames || !profile.fieldNames[idx]) && 'uk-text-muted' }" title="{ App.i18n.get('default:') + ' ' + field }" data-uk-tooltip>{ idx }</label>
+                    <div class="uk-form-controls">
+                        <input type="text" bind="profile.fieldNames.{idx}" onchange="{updateFieldMap}" placeholder="{ field }" />
+                    </div>
+                </div>
+
+            </div>
+
           </div>
 
         </div>
@@ -594,6 +589,7 @@
         this.collections  = {{ json_encode($collections) }};
         this.singletons   = {{ json_encode($singletons) }};
         this.forms        = {{ json_encode($forms) }};
+        this.fieldNames   = {{ json_encode($fieldNames) }};
 
         this.themes       = {};
         this.theme        = {};
@@ -601,6 +597,7 @@
         this.tab = 'main';
 //         this.tab = 'other';
 //         this.tab = 'themes';
+//         this.tab = 'fieldNames';
 
         this.thumbnailMethods = ['thumbnail', 'bestFit'];
 
@@ -733,6 +730,17 @@
 
         selectIcon(e) {
             this.profile.icon = e.target.getAttribute('icon');
+        }
+
+        updateFieldMap(e) {
+
+            if (!this.profile.fieldNames || !this.profile.fieldNames[e.item.idx]) return;
+
+            this.profile.fieldNames[e.item.idx] = this.profile.fieldNames[e.item.idx].trim();
+
+            if (this.profile.fieldNames[e.item.idx] == '') {
+                delete this.profile.fieldNames[e.item.idx];
+            }
         }
 
     </script>

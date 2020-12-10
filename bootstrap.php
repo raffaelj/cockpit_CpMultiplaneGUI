@@ -14,6 +14,27 @@
 
 $this->module('cpmultiplanegui')->extend([
 
+    'fieldNames' => [                             // field mappings to default field names
+        'slug'              => '_id',
+        'nav'               => 'nav',
+        'permalink'         => 'permalink',
+        'published'         => 'published',
+        'startpage'         => 'startpage',
+        'title'             => 'title',
+        'content'           => 'content',
+        'description'       => 'description',
+        'excerpt'           => 'excerpt',
+        'type'              => 'type',            // only if pageTypeDetection == 'type'
+        'subpagemodule'     => 'subpagemodule',
+        'privacypage'       => 'privacypage',
+        'seo'               => 'seo',
+        'featured_image'    => 'featured_image',
+        'background_image'  => 'background_image',
+        'logo'              => 'logo',            // only in site
+        'tags'              => 'tags',
+        'category'          => 'category',        // not used for now, will be like tags
+    ],
+
     'createProfile' => function($name, $data = []) {
 
         if (!trim($name)) {
