@@ -2,6 +2,7 @@
 
 /**
  * options:
+ *
  * [x] pages
  * [x] posts
  * [x] siteSingleton
@@ -14,7 +15,6 @@
  * [ ] search (needs to be less experimental before I build an user interface) --> defaults to "multiplane/use/collections"
  * [x] lexy
  * [x] theme
- * [ ] site_url --> not needed - $app->module('cpmultiplanegui')->getSiteUrl()
  * [ ] pagination for posts (subpages)
  * [x] maintenance
  * [x] preRenderFields
@@ -22,12 +22,8 @@
  * [x] preview
  * [ ] matomo
  * [ ] structure (pages, subpages)
- * [ ] map field names to default structure (e. g. use 'name' as 'title')
- * [ ] custom menus
- * [ ] 
- * [ ] 
- * [ ] 
- * [ ] 
+ * [x] map field names to default structure (e. g. use 'name' as 'title')
+ * [ ] custom menus/nav
  */
 
 
@@ -176,17 +172,6 @@
                               </select>
                           </div>
 
-<!--                          <div class="uk-margin">
-                              <div class="uk-flex uk-flex-middle uk-margin-small">
-                                  <label class="uk-text-small">
-                                      @lang('Field name for slugs')
-                                  </label>
-                                  <span class="uk-flex-item-1"></span>
-                                  <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('Default: _id (no slugs)')" data-uk-tooltip></i>
-                              </div>
-                              <input type="text" class="uk-width-1-1" bind="profile.slugName" />
-                          </div>-->
-
                           <div class="uk-margin">
                               <div class="uk-flex uk-flex-middle uk-margin-small">
                                   <label class="uk-text-small">
@@ -198,6 +183,18 @@
                                   <option value="{ thm.name }" selected="{ profile.theme == thm.name }" each="{ thm, idx in themes }">{ thm.label || thm.name }</option>
                               </select>
                           </div>
+
+                          <div class="uk-margin">
+                              <div class="uk-flex uk-flex-middle uk-margin-small">
+                                  <label class="uk-text-small">
+                                      @lang('Page type detection')
+                                  </label>
+                              </div>
+                              <select class="uk-width-1-1" bind="profile.pageTypeDetection">
+                                  <option value="collections" selected="{ !profile.pageTypeDetection || profile.pageTypeDetection == 'collections' }">collections</option>
+                                  <option value="type" selected="{ profile.pageTypeDetection == 'type' }">type</option>
+                              </select>
+                          </div>
                       </div>
                   </div>
 
@@ -206,15 +203,18 @@
                           <div class="uk-grid" data-uk-grid-margin>
                               <div class="uk-width-xlarge-1-2">
                                   <label class="uk-text-small">@lang('Use collections')</label>
-                                  <field-multipleselect bind="profile.use.collections" options="{ selectCollectionsOptions }"></field-multipleselect>
+                                  <field-multipleselect bind="profile.use.collections" options="{ selectCollectionsOptions }" if="{ collections.length }"></field-multipleselect>
+                                  <div class="uk-text-small uk-text-muted" if="{ !collections.length }">@lang('No collections available')</div>
                               </div>
                               <div class="uk-width-xlarge-1-2">
                                   <label class="uk-text-small">@lang('Use singletons')</label>
-                                  <field-multipleselect bind="profile.use.singletons" options="{ selectSingletonsOptions }"></field-multipleselect>
+                                  <field-multipleselect bind="profile.use.singletons" options="{ selectSingletonsOptions }" if="{ singletons.length }"></field-multipleselect>
+                                  <div class="uk-text-small uk-text-muted" if="{ !singletons.length }">@lang('No singletons available')</div>
                               </div>
                               <div class="uk-width-xlarge-1-2">
                                   <label class="uk-text-small">@lang('Use Forms')</label>
-                                  <field-multipleselect bind="profile.use.forms" options="{ selectFormsOptions }"></field-multipleselect>
+                                  <field-multipleselect bind="profile.use.forms" options="{ selectFormsOptions }" if="{ forms.length }"></field-multipleselect>
+                                  <div class="uk-text-small uk-text-muted" if="{ !forms.length }">@lang('No forms available')</div>
                               </div>
                           </div>
                       </div>
@@ -240,7 +240,7 @@
                                       @lang('Admin user interface')
                                   </label>
                                   <span class="uk-flex-item-1"></span>
-                                  
+    
                               </div>
                               <field-boolean bind="profile.guiDisplayCustomNav" label="@lang('Enable custom menu in top bar')"></field-boolean>
                           </div>
@@ -254,6 +254,17 @@
                                   <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('Display breadcrumbs')" data-uk-tooltip></i>
                               </div>
                               <field-boolean bind="profile.displayBreadcrumbs" label="@lang('On')"></field-boolean>
+                          </div>
+
+                          <div class="uk-margin">
+                              <div class="uk-flex uk-flex-middle uk-margin-small">
+                                  <label class="uk-text-small">
+                                      @lang('Use permalinks')
+                                  </label>
+                                  <span class="uk-flex-item-1"></span>
+                                  <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('enable permalinks (experimental)')" data-uk-tooltip></i>
+                              </div>
+                              <field-boolean bind="profile.usePermalinks" label="@lang('On')"></field-boolean>
                           </div>
 
                       </div>
@@ -442,7 +453,7 @@
 
                     <field-tags bind="profile.preRenderFields" autocomplete="{fieldnames}" placeholder="@lang('Add field name')"></field-tags>
                     <div class="uk-text-small uk-margin-small">
-                        @lang('For markdown fields or to normalize relative links in localized wysiwyg fields...')
+                        @lang('For markdown fields')
                     </div>
 
                 </div>
