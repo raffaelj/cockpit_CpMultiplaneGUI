@@ -89,7 +89,7 @@ App.$(document).on('init-wysiwyg-editor', function(e, editor) {
                     height  = dialog.dialog.find('[data-height]')[0].value,
                     method  = dialog.dialog.find('[data-method]')[0].value,
                     quality = dialog.dialog.find('[data-quality]')[0].value,
-                    size    = sizeComponent ? sizeComponent.root.querySelector('select').value : null;
+                    size    = (sizeComponent && currentAsset.sizes) ? sizeComponent.root.querySelector('select').value : null;
                     content = '';
 
                 if (currentAsset.mime.match(/^image\//)) {
