@@ -67,11 +67,13 @@ $allowSubpages = true;
 
         @if(count($forms))
         <div class="uk-margin-small">
-{ (entry.{{ $fieldNames['contactform'] }} = entry.{{ $fieldNames['contactform'] }} || {}) && '' }
-            <cp-fieldcontainer>
-                <field-boolean bind="entry.{{ $fieldNames['contactform'] }}.active" label="@lang('Add form')" class="uk-margin-small uk-text-middle small"></field-boolean>
 
-                <select bind="entry.{{ $fieldNames['contactform'] }}.form" aria-label="@lang('Select form')" class="uk-margin-small" if="{ entry.{{ $fieldNames['contactform'] }}.active }">
+{ (entry['{{ $fieldNames['contactform'] }}'+(lang?'_'+lang:'')] = entry['{{ $fieldNames['contactform'] }}'+(lang?'_'+lang:'')] || {}) && '' }
+
+            <cp-fieldcontainer>
+                <field-boolean bind="entry.{{ $fieldNames['contactform'] }}{lang ? '_'+lang : ''}.active" label="@lang('Add form')" class="uk-margin-small uk-text-middle small"></field-boolean>
+
+                <select bind="entry.{{ $fieldNames['contactform'] }}{lang ? '_'+lang : ''}.form" aria-label="@lang('Select form')" class="uk-margin-small" if="{ entry['{{ $fieldNames['contactform'] }}'+(lang?'_'+lang:'')].active }">
                     <option value=""></option>
                     @foreach($forms as $form)
                     <option value="{{ $form['name'] }}">{{ $form['label'] }}</option>
@@ -83,6 +85,7 @@ $allowSubpages = true;
 
         @if($allowSubpages && (($pageTypeDetection == 'type') || ($pageTypeDetection == 'collections' && count($collections))))
         <div class="uk-margin uk-width-medium-1-1 uk-width-small-1-2">
+
 { (entry.{{ $fieldNames['subpagemodule'] }} = !entry.{{ $fieldNames['subpagemodule'] }} || Array.isArray(entry.{{ $fieldNames['subpagemodule'] }}) ? {} : entry.{{ $fieldNames['subpagemodule'] }}) && '' }
             <cp-fieldcontainer>
 
@@ -198,6 +201,9 @@ $allowSubpages = true;
         var sidebar = App.$('#multiplane_sidebar');
         sidebar.prependTo(sidebar.parent());
         delete sidebar;
+
+        // hide contactform field in entry view
+        this.excludeFields.push("{{ $fieldNames['contactform'] }}");
     });
 
 </script>
