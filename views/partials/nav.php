@@ -30,6 +30,19 @@
         @endif
         @endforeach
 
+        @foreach($forms as $s)
+        @if($app->module('cockpit')->hasaccess('forms', 'manage'))
+        <li class="uk-float-left uk-margin-small-right">
+            <a class="uk-svg-adjust {{ $s['active'] ? 'uk-active' : 'uk-text-muted' }}" href="@route('/forms/entries/'.$s['name'])">
+                <i class="uk-icon-justify" title="{{ htmlspecialchars($s['label']) }}" data-uk-tooltip="pos:'bottom'">
+                    <img src="@base(!empty($s['icon']) ? 'assets:app/media/icons/'.$s['icon'] : 'forms:icon.svg')" alt="@lang($s['label'])" data-uk-svg width="20px" height="20px" style="color:{{ $s['color']}}" />
+                </i>
+                <span class="custom_nav_label uk-hidden-medium uk-text-small uk-text-bolder">@lang($s['label'])</span>
+            </a>
+        </li>
+        @endif
+        @endforeach
+
         @foreach($other as $o)
         <li class="uk-float-left uk-margin-small-right">
             <a class="uk-svg-adjust {{ $o['active'] ? 'uk-active' : 'uk-text-muted' }}" href="@route($o['route'])">
