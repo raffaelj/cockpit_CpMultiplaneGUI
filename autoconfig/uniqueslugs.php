@@ -33,7 +33,18 @@ $this->on('cockpit.bootstrap', function() {
         }
 
         if ($isMultilingual && !isset($uConfig['localize'][$col])) {
-            $uConfig['localize'][$col] = $fieldName;
+
+            // slug might not be localized
+            $_collection = $this->module('collections')->collection($col);
+            if ($_collection && isset($_collection['fields']) && is_array($_collection['fields'])) {
+
+                foreach ($_collection['fields'] as $field) {
+                    if ($field['name'] == $fieldName && isset($field['localize']) && $field['localize']) {
+                        $uConfig['localize'][$col] = $fieldName;
+                        break;
+                    }
+                }
+            }
         }
     }
 
