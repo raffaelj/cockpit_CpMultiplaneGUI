@@ -34,17 +34,20 @@ $this->on('admin.init', function() {
         });
     }
 
+    $config = $this->module('cpmultiplanegui')->getConfig();
+
+    $currentProfile = $config['profile'] ?? null;
+    $profileExists =  $currentProfile && $this->module('cpmultiplanegui')->exists($currentProfile);
+
     // add to modules menu
     if ($this->module('cockpit')->hasaccess('cpmultiplanegui', 'manage')) {
         $this->helper('admin')->addMenuItem('modules', [
             'label'  => 'Multiplane',
             'icon'   => 'cpmultiplanegui:icon.svg',
-            'route'  => '/multiplane',
+            'route'  => '/multiplane' . ($profileExists ? "/profile/{$currentProfile}" : ''),
             'active' => strpos($this['route'], '/multiplane') === 0
         ]);
     }
-
-    $config = $this->module('cpmultiplanegui')->getConfig();
 
     // display "Show in menu" toggle
     $this->on('collections.settings.aside', function() {
