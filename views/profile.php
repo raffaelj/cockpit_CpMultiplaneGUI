@@ -124,10 +124,9 @@
             <div class="uk-width-1-1 uk-margin-bottom">
                 <ul class="uk-tab uk-margin-bottom">
                     <li class="{ tab=='main' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="main">@lang('Main')</a></li>
-                    <li class="{ tab=='theme' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="theme">@lang('Theme')</a></li>
-                    <!--<li class="{ tab=='nav' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="nav">@lang('Menus')</a></li>-->
                     <li class="{ tab=='other' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="other">@lang('Other')</a></li>
-                    <li class="{ tab=='themes' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="themes">@lang('Themes')</a></li>
+                    <li class="{ tab=='theme' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="theme">@lang('Theme')</a></li>
+                    <li class="{ tab=='themes' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="themes">@lang('All Themes')</a></li>
                     <li class="{ tab=='fieldNames' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="fieldNames">@lang('Field mapping')</a></li>
                 </ul>
             </div>
@@ -136,12 +135,25 @@
 
             <div class="uk-width-1-1" show="{tab=='main'}">
 
-                <div class="uk-grid uk-grid-match" data-uk-grid-margin>
+                <div class="uk-grid" data-uk-grid-margin>
 
-                  <div class="uk-width-medium-1-2 uk-width-large-1-3">
+                  <div class="uk-width-1-1">
                       <div class="uk-panel-box uk-panel-card">
 
-                          <div class="uk-margin">
+                        <div class="uk-grid" data-uk-grid-margin>
+
+                          <div class="uk-width-medium-1-2 uk-width-xlarge-1-4">
+                              <div class="uk-flex uk-flex-middle uk-margin-small">
+                                  <label class="uk-text-small">
+                                      @lang('Multilingual website')
+                                  </label>
+                                  <span class="uk-flex-item-1"></span>
+                                  <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('Use the UniqueSlugs addon to localize slug fields.')" data-uk-tooltip></i>
+                              </div>
+                              <field-boolean bind="profile.isMultilingual" label="@lang('multilingual')"></field-boolean>
+                          </div>
+
+                          <div class="uk-width-medium-1-2 uk-width-xlarge-1-4">
                               <div class="uk-flex uk-flex-middle uk-margin-small">
                                   <label class="uk-text-small">
                                       @lang('Select pages collection')
@@ -156,7 +168,7 @@
                               </select>
                           </div>
 
-                          <div class="uk-margin">
+                          <div class="uk-width-medium-1-2 uk-width-xlarge-1-4">
                               <div class="uk-flex uk-flex-middle uk-margin-small">
                                   <label class="uk-text-small">
                                       @lang('Select site singleton')
@@ -172,7 +184,7 @@
                               </select>
                           </div>
 
-                          <div class="uk-margin">
+                          <div class="uk-width-medium-1-2 uk-width-xlarge-1-4">
                               <div class="uk-flex uk-flex-middle uk-margin-small">
                                   <label class="uk-text-small">
                                       @lang('Theme')
@@ -183,91 +195,81 @@
                                   <option value="{ thm.name }" selected="{ profile.theme == thm.name }" each="{ thm, idx in themes }">{ thm.label || thm.name }</option>
                               </select>
                           </div>
-
-                          <div class="uk-margin">
-                              <div class="uk-flex uk-flex-middle uk-margin-small">
-                                  <label class="uk-text-small">
-                                      @lang('Page type detection')
-                                  </label>
-                              </div>
-                              <select class="uk-width-1-1" bind="profile.pageTypeDetection">
-                                  <option value="collections" selected="{ !profile.pageTypeDetection || profile.pageTypeDetection == 'collections' }">collections</option>
-                                  <option value="type" selected="{ profile.pageTypeDetection == 'type' }">type</option>
-                              </select>
-                          </div>
                       </div>
+                    </div>
                   </div>
 
-                  <div class="uk-width-medium-1-2 uk-width-large-1-3">
-                      <div class="uk-panel-box uk-panel-card">
-                          <div class="uk-grid" data-uk-grid-margin>
-                              <div class="uk-width-xlarge-1-2">
-                                  <label class="uk-text-small">@lang('Use collections')</label>
-                                  <field-multipleselect bind="profile.use.collections" options="{ selectCollectionsOptions }" if="{ collections.length }"></field-multipleselect>
-                                  <div class="uk-text-small uk-text-muted" if="{ !collections.length }">@lang('No collections available')</div>
-                              </div>
-                              <div class="uk-width-xlarge-1-2">
-                                  <label class="uk-text-small">@lang('Use singletons')</label>
-                                  <field-multipleselect bind="profile.use.singletons" options="{ selectSingletonsOptions }" if="{ singletons.length }"></field-multipleselect>
-                                  <div class="uk-text-small uk-text-muted" if="{ !singletons.length }">@lang('No singletons available')</div>
-                              </div>
-                              <div class="uk-width-xlarge-1-2">
-                                  <label class="uk-text-small">@lang('Use Forms')</label>
-                                  <field-multipleselect bind="profile.use.forms" options="{ selectFormsOptions }" if="{ forms.length }"></field-multipleselect>
-                                  <div class="uk-text-small uk-text-muted" if="{ !forms.length }">@lang('No forms available')</div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+                  <div class="uk-width-1-1" if="{ !loading }">
+                      <div class="">
 
-                  <div class="uk-width-medium-1-2 uk-width-large-1-3">
-                      <div class="uk-panel-box uk-panel-card">
+                        <div class="uk-grid uk-grid-match" data-uk-grid-margin>
 
-                          <div class="uk-margin">
-                              <div class="uk-flex uk-flex-middle uk-margin-small">
-                                  <label class="uk-text-small">
-                                      @lang('Multilingual website')
-                                  </label>
-                                  <span class="uk-flex-item-1"></span>
-                                  <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('Use the UniqueSlugs addon to localize slug fields.')" data-uk-tooltip></i>
-                              </div>
-                              <field-boolean bind="profile.isMultilingual" label="@lang('multilingual')"></field-boolean>
-                          </div>
+                            <div class="uk-width-medium-1-2 uk-width-large-1-3">
+                            <div class="uk-panel-box uk-panel-card">
+                                <label class="uk-text-small">@lang('Use collections')</label>
+                                <field-multipleselect bind="profile.use.collections" options="{ selectCollectionsOptions }" if="{ collections.length }"></field-multipleselect>
+                                <div class="uk-text-small uk-text-muted" if="{ !collections.length }">@lang('No collections available')</div>
+                            </div>
+                            </div>
 
-                          <div class="uk-margin">
-                              <div class="uk-flex uk-flex-middle uk-margin-small">
-                                  <label class="uk-text-small">
-                                      @lang('Admin user interface')
-                                  </label>
-                                  <span class="uk-flex-item-1"></span>
-    
-                              </div>
-                              <field-boolean bind="profile.guiDisplayCustomNav" label="@lang('Enable custom menu in top bar')"></field-boolean>
-                          </div>
+                            <div class="uk-width-medium-1-2 uk-width-large-1-3">
+                                <div class="uk-panel-box uk-panel-card">
+                                    <div class="">
+                                        <label class="uk-text-small">@lang('Use singletons')</label>
+                                        <field-multipleselect bind="profile.use.singletons" options="{ selectSingletonsOptions }" if="{ singletons.length }"></field-multipleselect>
+                                        <div class="uk-text-small uk-text-muted" if="{ !singletons.length }">@lang('No singletons available')</div>
+                                    </div>
+                                    <div class="uk-margin">
+                                        <label class="uk-text-small">@lang('Use Forms')</label>
+                                        <field-multipleselect bind="profile.use.forms" options="{ selectFormsOptions }" if="{ forms.length }"></field-multipleselect>
+                                        <div class="uk-text-small uk-text-muted" if="{ !forms.length }">@lang('No forms available')</div>
+                                    </div>
+                                </div>
+                            </div>
 
-                          <div class="uk-margin">
-                              <div class="uk-flex uk-flex-middle uk-margin-small">
-                                  <label class="uk-text-small">
-                                      @lang('Breadcrumbs')
-                                  </label>
-                                  <span class="uk-flex-item-1"></span>
-                                  <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('Display breadcrumbs')" data-uk-tooltip></i>
-                              </div>
-                              <field-boolean bind="profile.displayBreadcrumbs" label="@lang('On')"></field-boolean>
-                          </div>
+                            <div if="{!profile.use.collections.length}">
+                                @lang('No collection selected')
+                            </div>
 
-                          <div class="uk-margin">
-                              <div class="uk-flex uk-flex-middle uk-margin-small">
-                                  <label class="uk-text-small">
-                                      @lang('Use permalinks')
-                                  </label>
-                                  <span class="uk-flex-item-1"></span>
-                                  <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('enable permalinks (experimental)')" data-uk-tooltip></i>
-                              </div>
-                              <field-boolean bind="profile.usePermalinks" label="@lang('On')"></field-boolean>
-                          </div>
+                            <div class="uk-width-medium-1-2 uk-width-large-1-3" each="{ col in profile.use.collections }">
+                                <div class="uk-panel-box uk-panel-card">
+                                    <h3 class="">{ selectCollectionsOptions[col] ?? col }</h3>
 
-                      </div>
+                                    <div class="uk-form-row">
+                                        <label>_id</label>
+                                        <input type="text" class="uk-width-1-1" bind="profile.structure.{col}._id" value="{col}" readonly></input>
+                                    </div>
+                                    <div class="uk-form-row">
+                                        <label>label</label>
+                                        <input type="text" class="uk-width-1-1" bind="profile.structure.{col}.label"></input>
+                                    </div>
+                                    <div class="uk-form-row" if="{ profile.isMultilingual }" each="{ lang in App.$data.languages }">
+                                        <label>label ({ lang.label })</label>
+                                        <input type="text" class="uk-width-1-1" bind="profile.structure.{col}.label_{lang.code}"></input>
+                                    </div>
+                                    <div class="uk-form-row">
+                                        <label>slug</label>
+                                        <input type="text" class="uk-width-1-1" bind="profile.structure.{col}.slug"></input>
+                                    </div>
+                                    <div class="uk-form-row" if="{ profile.isMultilingual }" each="{ lang in App.$data.languages }">
+                                        <label>slug ({ lang.label })</label>
+                                        <input type="text" class="uk-width-1-1" bind="profile.structure.{col}.slug_{lang.code}"></input>
+                                    </div>
+
+                                    <div class="uk-form-row" if="{ col != profile.pages }">
+                                        <label>parent collection</label>
+                                        <select class="uk-width-1-1" bind="profile.structure.{col}._pid" value="{col}">
+                                            <option value=""></option>
+                                            <option value="{ idx }" each="{ label, idx in selectCollectionsOptions }" if="{ idx != col }">{ label }</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
                   </div>
 
                 </div>
@@ -318,7 +320,7 @@
                                 <div class="panel-footer-aside uk-text-right">
                                     <span class="" if="{ theme.info.version }">{ theme.info.version }</span>
                                 </div>
-                                
+
                                 <div class="uk-width-1-1 uk-text-center uk-margin-small" if="{ theme.info }">
                                     <div class="uk-text-small uk-margin-small">{ theme.info.description }</div>
                                     <span class="badge" each="{ k in theme.info.keywords }" if="{ theme.info.keywords && Array.isArray(theme.info.keywords) }">{ k }</span>
@@ -335,6 +337,56 @@
 
 
             <div class="uk-width-1-1" show="{tab=='other'}">
+
+                <div class="uk-panel-box uk-panel-card uk-panel-header uk-margin">
+
+                    <h3 class="uk-panel-title">@lang('Other')</h3>
+
+                    <div class="uk-margin">
+                        <div class="uk-flex uk-flex-middle uk-margin-small">
+                            <label class="uk-text-small">
+                                @lang('Admin user interface')
+                            </label>
+                            <span class="uk-flex-item-1"></span>
+                        </div>
+                        <field-boolean bind="profile.guiDisplayCustomNav" label="@lang('Enable custom menu in top bar')"></field-boolean>
+                    </div>
+
+                    <div class="uk-margin">
+                        <div class="uk-flex uk-flex-middle uk-margin-small">
+                            <label class="uk-text-small">
+                                @lang('Breadcrumbs')
+                            </label>
+                            <span class="uk-flex-item-1"></span>
+                            <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('Display breadcrumbs')" data-uk-tooltip></i>
+                        </div>
+                        <field-boolean bind="profile.displayBreadcrumbs" label="@lang('On')"></field-boolean>
+                    </div>
+
+                    <div class="uk-margin">
+                        <div class="uk-flex uk-flex-middle uk-margin-small">
+                            <label class="uk-text-small">
+                                @lang('Use permalinks')
+                            </label>
+                            <span class="uk-flex-item-1"></span>
+                            <i class="uk-icon-info-circle uk-margin-small-left" title="@lang('enable permalinks (experimental)')" data-uk-tooltip></i>
+                        </div>
+                        <field-boolean bind="profile.usePermalinks" label="@lang('On')"></field-boolean>
+                    </div>
+
+                    <div class="uk-margin">
+                        <div class="uk-flex uk-flex-middle uk-margin-small">
+                            <label class="uk-text-small">
+                                @lang('Page type detection') (@lang('deprecated'))
+                            </label>
+                        </div>
+                        <select class="uk-width-1-1" bind="profile.pageTypeDetection">
+                            <option value="collections" selected="{ !profile.pageTypeDetection || profile.pageTypeDetection == 'collections' }">collections</option>
+                            <option value="type" selected="{ profile.pageTypeDetection == 'type' }">type</option>
+                        </select>
+                    </div>
+
+                </div>
 
                 <div class="uk-panel-box uk-panel-card uk-panel-header">
 
@@ -595,6 +647,8 @@
 
         riot.util.bind(this);
 
+        this.loading = true;
+
         this.profile      = {{ !empty($profile) ? json_encode($profile) : '{}' }};
         this.fieldnames   = {{ json_encode($fieldnames) }};
         this.collections  = {{ json_encode($collections) }};
@@ -606,9 +660,6 @@
         this.theme        = {};
 
         this.tab = 'main';
-//         this.tab = 'other';
-//         this.tab = 'themes';
-//         this.tab = 'fieldNames';
 
         this.thumbnailMethods = ['thumbnail', 'bestFit'];
 
@@ -630,6 +681,9 @@
                 name: 'enabled',
                 label: App.i18n.get('Enabled'),
                 type: 'boolean',
+                options: {
+                    default: true,
+                }
             },
         ];
 
@@ -642,7 +696,16 @@
                 return false;
             });
 
+            if (!this.profile.structure) this.profile.structure = {};
+            if (!this.profile.use) {
+                this.profile.use = {
+                    collections: [],
+                };
+            }
+
             this.get_multiplane_config();
+
+            this.loading = false;
 
             this.update();
 
@@ -654,6 +717,59 @@
             if (this.profile._id) {
                 this.refs.name.disabled = true;
             }
+
+            if (this.profile.siteSingleton) {
+                if (!this.profile.use.singletons) {
+                    this.profile.use.singletons = [this.profile.siteSingleton];
+                } else if (!this.profile.use.singletons.includes(this.profile.siteSingleton)) {
+                    this.profile.use.singletons.unshift(this.profile.siteSingleton);
+                }
+            }
+
+            if (this.profile.pages) {
+                if (!this.profile.use.collections.includes(this.profile.pages)) {
+                    this.profile.use.collections.unshift(this.profile.pages);
+                }
+            }
+
+            // compare `use` with `structure`
+            this.profile.use.collections.forEach(function(col) {
+
+                var isPagesCollection = $this.profile.pages && $this.profile.pages == col;
+
+                if (!$this.profile.structure[col]) {
+                    $this.profile.structure[col] = {
+                        _id: col,
+                        label: col,
+                        slug: isPagesCollection ? '' : col
+                    };
+                    // set translated fields
+                    if ($this.profile.isMultilingual) {
+                        App.$data.languages.forEach(function(lang) {
+                            $this.profile.structure[col]['label_'+lang.code] = col;
+                            $this.profile.structure[col]['slug_'+lang.code] = isPagesCollection ? '' : col;
+                        });
+                    }
+                    // set parent collection
+                    if (!isPagesCollection) {
+                        $this.profile.structure[col]['_pid'] = $this.profile.pages;
+                    }
+                } else {
+                    // don't be your own parent
+                    if ($this.profile.structure[col]['_pid'] && $this.profile.structure[col]['_pid'] == col) {
+                        delete $this.profile.structure[col]['_pid'];
+                    }
+                    if (isPagesCollection) {
+                        delete $this.profile.structure[col]['_pid'];
+                    }
+                }
+
+            });
+            Object.keys(this.profile.structure).forEach(function(k) {
+                if ($this.profile.use.collections && !$this.profile.use.collections.includes(k)) {
+                    delete $this.profile.structure[k];
+                }
+            });
 
         });
 
