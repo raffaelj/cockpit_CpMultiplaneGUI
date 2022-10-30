@@ -1,5 +1,21 @@
 # Changelog
 
+# 0.3.0
+
+* added select field for type based sub pages
+* a lot of cleanup
+* renamed `asset` in getImage.js to avoid var naming collision with riot mount in cp-asset
+* added option to choose image profile instead of getImage route
+* added autoconfig for ImageResize addon
+* tell robots not to index/follow the login page
+* fixed js error in wysiwyg field if asset has no sizes (from ImageResizeaddon)
+* made contact form localizable in entry side bar
+* added missing forms in custom header menu
+* check, if slug field is localized (auto config)
+* link directly to current profile (if available) from modules menu
+* implemented `structure` gui
+* added language option to form.settings.aside
+
 ## 0.2.2
 
 * fixed js error in seo field if description fallback field is no string

@@ -1,12 +1,12 @@
 <?php
 /**
  * GUI and some ui tweaks for Cockpit CMS, that fit with CpMultiplane frontend - work in progress
- * 
+ *
  * @see       https://github.com/raffaelj/cockpit_CpMultiplaneGUI
  * @see       https://github.com/raffaelj/CpMultiplane
  * @see       https://github.com/agentejo/cockpit/
- * 
- * @version   0.2.2
+ *
+ * @version   0.3.0
  * @author    Raffael Jesche
  * @license   MIT
  */
