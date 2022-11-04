@@ -17,18 +17,24 @@ $this->module('cpmultiplanegui')->extend([
 
         if (!empty($iConfig['profiles'])) return;
 
-        $mpdir = $this->findMultiplaneDir();
+        if (isset($this->app['modules']['multiplane'])) {
+            $mpConfig = $this->app->module('multiplane')->self_export();
+        }
+        else {
 
-        if (!$mpdir) return;
+            $mpdir = $this->findMultiplaneDir();
 
-        if (!$mpConfig) {
-            try {
-                \define('MP_SELF_EXPORT', true);
-                include_once($mpdir . '/bootstrap.php');
-                $mpConfig = $this->app->module('multiplane')->self_export();
-            }
-            catch(\Exception $e) {
-                return;
+            if (!$mpdir) return;
+
+            if (!isset($mpConfig)) {
+                try {
+                    if (!defined('MP_SELF_EXPORT')) \define('MP_SELF_EXPORT', true);
+                    include_once($mpdir . '/bootstrap.php');
+                    $mpConfig = $this->app->module('multiplane')->self_export();
+                }
+                catch(\Exception $e) {
+                    return;
+                }
             }
         }
 
