@@ -6,7 +6,7 @@
  * @see       https://github.com/raffaelj/CpMultiplane
  * @see       https://github.com/agentejo/cockpit/
  *
- * @version   0.3.0
+ * @version   0.3.1
  * @author    Raffael Jesche
  * @license   MIT
  */

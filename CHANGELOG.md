@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.3.1
+
+* fixed imageresize autoconfig if called directly from CpMultiplane (e. g. via cli)
+
 # 0.3.0
 
 * added select field for type based sub pages
