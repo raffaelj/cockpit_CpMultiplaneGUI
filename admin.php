@@ -55,7 +55,13 @@ $this->on('admin.init', function() {
     });
 
     $this->on('forms.settings.aside', function() {
-        $this->renderView('cpmultiplanegui:views/partials/forms.settings.aside.php');
+
+        $siteUrl = $this->module('cpmultiplanegui')->getSiteUrl(true);
+
+        $config = $this->module('cpmultiplanegui')->getConfig();
+        $isMultilingual = $config['isMultilingual'];
+
+        $this->renderView('cpmultiplanegui:views/partials/forms.settings.aside.php', compact('isMultilingual', 'siteUrl'));
     });
 
     $this->on('singletons.settings.aside', function() {

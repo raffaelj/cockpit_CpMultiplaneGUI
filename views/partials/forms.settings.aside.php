@@ -12,6 +12,15 @@
             @endforeach
         </select>
     </div>
+    @if($isMultilingual)
+    <div class="uk-margin">
+        @lang('Direct link:') <a href="{{ $siteUrl }}/{ form.multiplane.language ?? App.$data.locale }/form/{ form.name }" target="_blank">{{ $siteUrl }}/{ form.multiplane.language || App.$data.locale }/form/{ form.name }</a>
+    </div>
+    @else
+    <div class="uk-margin">
+        @lang('Direct link:') <a href="{{ $siteUrl }}/form/{ form.name }" target="_blank">{{ $siteUrl }}/form/{ form.name }</a>
+    </div>
+    @endif
     <div class="uk-margin">
         <field-boolean bind="form.multiplane.gui_in_header" label="@lang('Show in header menu')"></field-boolean>
     </div>
