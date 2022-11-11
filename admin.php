@@ -61,7 +61,9 @@ $this->on('admin.init', function() {
         $config = $this->module('cpmultiplanegui')->getConfig();
         $isMultilingual = $config['isMultilingual'];
 
-        $this->renderView('cpmultiplanegui:views/partials/forms.settings.aside.php', compact('isMultilingual', 'siteUrl'));
+        $formsInUse = $config['use']['forms'] ?? [];
+
+        $this->renderView('cpmultiplanegui:views/partials/forms.settings.aside.php', compact('isMultilingual', 'siteUrl', 'formsInUse'));
     });
 
     $this->on('singletons.settings.aside', function() {

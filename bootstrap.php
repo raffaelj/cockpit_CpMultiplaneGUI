@@ -253,7 +253,7 @@ include_once(__DIR__.'/autoconfig/uniqueslugs.php');
 include_once(__DIR__.'/autoconfig/imageresize.php');
 
 // ACL
-$app('acl')->addResource('cpmultiplanegui', ['create', 'delete', 'manage']);
+$app('acl')->addResource('cpmultiplanegui', ['create', 'delete', 'manage', 'edit_forms_in_use']);
 
 // admin ui
 if (COCKPIT_ADMIN && !COCKPIT_API_REQUEST) {

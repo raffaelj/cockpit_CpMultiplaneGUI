@@ -134,4 +134,38 @@ class Admin extends \Cockpit\AuthController {
 
     } // end of get_multiplane_config()
 
+    public function edit_forms_in_use() {
+
+        $hasAccess = $this->module('cockpit')->hasaccess('cpmultiplanegui', 'manage') || $this->module('cockpit')->hasaccess('cpmultiplanegui', 'edit_forms_in_use');
+        if (!$hasAccess) return $this->helper('admin')->denyRequest();
+
+        $config = $this->module('cpmultiplanegui')->getConfig();
+        $currentProfile = $config['profile'] ?? null;
+        $profile = $this->module('cpmultiplanegui')->profile($currentProfile);
+        if (!$profile) return false;
+
+        $form = $this->param('form', null);
+        $use  = $this->param('use', null);
+        if ($form == null || $use == null) return false;
+
+        $formsInUse = $profile['use']['forms'] ?? [];
+        if ($use == 1) {
+            if (array_search($form, $formsInUse) === false) {
+                $formsInUse[] = $form;
+            }
+        }
+        if ($use == 0) {
+            if (($key = array_search($form, $formsInUse)) !== false) {
+                array_splice($formsInUse, $key, 1);
+            }
+        }
+
+        $profile['use']['forms'] = $formsInUse;
+
+        $result = $this->app->module('cpmultiplanegui')->saveProfile($profile['name'], $profile);
+
+        return $result ? ['success' => true] : ['success' => false];
+
+    }
+
 }
