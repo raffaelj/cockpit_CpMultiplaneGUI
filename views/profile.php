@@ -233,7 +233,12 @@
 
                             <div class="uk-width-medium-1-2 uk-width-large-1-3" each="{ col in profile.use.collections }">
                                 <div class="uk-panel-box uk-panel-card">
-                                    <h3 class="">{ selectCollectionsOptions[col] ?? col }</h3>
+                                    <h3 class="uk-panel-title">
+                                        <span class="uk-svg-adjust">
+                                            <img riot-src="@base('assets:app/media/icons/'){ collectionsMeta[col].icon }" alt="" data-uk-svg width="20px" height="20px" style="color:{ collectionsMeta[col].color }" />
+                                        </span>
+                                        { selectCollectionsOptions[col] ?? col }
+                                    </h3>
 
                                     <div class="uk-form-row">
                                         <label>_id</label>
@@ -664,8 +669,15 @@
         this.thumbnailMethods = ['thumbnail', 'bestFit'];
 
         this.selectCollectionsOptions = {};
+        this.collectionsMeta = {};
         this.collections.forEach(function(e) {
             $this.selectCollectionsOptions[e.name] = e.label || e.name;
+            $this.collectionsMeta[e.name] = {
+                name: e.name,
+                label: e.label || e.name,
+                color: e.color || '',
+                icon: e.icon || '',
+            };
         });
         this.selectSingletonsOptions = {};
         this.singletons.forEach(function(e) {
