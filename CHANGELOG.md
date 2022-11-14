@@ -1,5 +1,12 @@
 # Changelog
 
+# 0.3.2
+
+* improved profile ui
+* improfed forms ui
+* added option to "publish" forms to profile via forms ui
+* added new ACL `edit_forms_in_use`
+
 # 0.3.1
 
 * fixed imageresize autoconfig if called directly from CpMultiplane (e. g. via cli)
