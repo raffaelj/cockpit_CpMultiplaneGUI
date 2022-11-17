@@ -190,6 +190,7 @@ $this->on('admin.init', function() {
                     $forms[] = [
                         'name' => $name,
                         'label' => !empty($meta['label']) ? $meta['label'] : $name,
+                        'language' => $meta['multiplane']['language'] ?? '',
                     ];
                 }
                 // sort forms

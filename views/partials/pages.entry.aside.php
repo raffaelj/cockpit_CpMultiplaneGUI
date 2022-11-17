@@ -76,7 +76,7 @@ $allowSubpages = true;
                 <select bind="entry.{{ $fieldNames['contactform'] }}{lang ? '_'+lang : ''}.form" aria-label="@lang('Select form')" class="uk-margin-small" if="{ entry['{{ $fieldNames['contactform'] }}'+(lang?'_'+lang:'')].active }">
                     <option value=""></option>
                     @foreach($forms as $form)
-                    <option value="{{ $form['name'] }}">{{ $form['label'] }}</option>
+                    <option value="{{ $form['name'] }}">{{ $form['label'] }}@if(!empty($form['language'])) ({{ $form['language'] }})@endif</option>
                     @endforeach
                 </select>
             <cp-fieldcontainer>
