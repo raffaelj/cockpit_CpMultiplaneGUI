@@ -1,9 +1,7 @@
-<div class="uk-margin">
-    <div class="uk-flex uk-flex-middle">
-        <i class="uk-icon-justify" title="{{ htmlspecialchars($c['label']) }}" data-uk-tooltip="pos:'bottom'">
-            <img src="@url('cpmultiplanegui:icon.svg')" alt="icon" data-uk-svg width="16px" height="16px" />
-        </i>
-        <span>CpMultiplane</span>
+<div class="uk-margin uk-panel-box uk-panel-card uk-panel-box-secondary">
+    <div class="uk-panel-box-header">
+        <img class="uk-margin-small-right" src="@url('cpmultiplanegui:icon.svg')" alt="icon" data-uk-svg width="20px" height="20px" />
+        CpMultiplane
     </div>
     <div class="uk-margin">
         <field-boolean bind="collection.multiplane.sidebar" title="@lang('Enable sidebar')" label="@lang('Enable sidebar')"></field-boolean>
