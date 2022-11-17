@@ -1,9 +1,13 @@
 # Changelog
 
+# 0.3.3
+
+* improved ui
+
 # 0.3.2
 
 * improved profile ui
-* improfed forms ui
+* improved forms ui
 * added option to "publish" forms to profile via forms ui
 * added new ACL `edit_forms_in_use`
 
