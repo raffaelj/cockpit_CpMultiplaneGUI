@@ -15,8 +15,8 @@
         </div>
 
         @if($app->module('cockpit')->hasaccess('cpmultiplanegui', 'manage') || $app->module('cockpit')->hasaccess('cpmultiplanegui', 'edit_forms_in_use'))
-        <button class="uk-button uk-button-primary" data-form="{ form.name }" data-use="1" if="{ !__formsInUse.includes(form.name) }" onclick="{ publish_form_to_mp_profile }">@lang('Publish')</a>
-        <button class="uk-button uk-button-danger" data-form="{ form.name }" data-use="0" if="{ __formsInUse.includes(form.name) }" onclick="{ publish_form_to_mp_profile }">@lang('Unpublish')</a>
+        <a class="uk-button uk-button-primary" data-form="{ form.name }" data-use="1" if="{ !__formsInUse.includes(form.name) }" onclick="{ publish_form_to_mp_profile }">@lang('Publish')</a>
+        <a class="uk-button uk-button-danger" data-form="{ form.name }" data-use="0" if="{ __formsInUse.includes(form.name) }" onclick="{ publish_form_to_mp_profile }">@lang('Unpublish')</a>
         @endif
 
     </div>
