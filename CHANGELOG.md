@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.3.4
+
+* fixed un-/publishing form on pressing Enter key
+
 # 0.3.3
 
 * improved ui
