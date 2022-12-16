@@ -54,13 +54,29 @@
         .uk-form-width-small {
             width: 70px;
         }
+
+        /* .uk-width-medium-* */
+        @media (min-width: 768px) {
+            .mp-block-use {
+                display: inline-block;
+                width: 49%;
+                vertical-align: top;
+            }
+        }
+        /* .uk-width-large-* */
+        @media (min-width: 960px) {
+            .mp-block-use {
+                display: inline-block;
+                width: 32%;
+            }
+        }
     </style>
     <div>
         <ul class="uk-breadcrumb">
-            <li><a href="@route('/multiplane')">@lang('Multiplane')</a></li>
+            <li><a href="@route('/multiplane')">Multiplane</a></li>
             <li class="uk-active"><span>@lang('Profile')</span></li>
         </ul>
-        <a class="uk-button uk-button-outline uk-text-warning uk-float-right" onclick="{ showEntryObject }">@lang('Show json')</a>
+        <a class="uk-button uk-button-outline uk-text-warning uk-float-right" onclick="{ showEntryObject }">@lang('Show JSON')</a>
     </div>
 
     <div class="uk-margin-top" >
@@ -204,23 +220,21 @@
 
                         <div class="uk-grid uk-grid-match" data-uk-grid-margin>
 
-                            <div class="uk-width-medium-1-2 uk-width-large-1-3">
-                            <div class="uk-panel-box uk-panel-card">
-                                <label class="uk-text-small">@lang('Use collections')</label>
-                                <field-multipleselect bind="profile.use.collections" options="{ selectCollectionsOptions }" if="{ collections.length }"></field-multipleselect>
-                                <div class="uk-text-small uk-text-muted" if="{ !collections.length }">@lang('No collections available')</div>
-                            </div>
-                            </div>
-
-                            <div class="uk-width-medium-1-2 uk-width-large-1-3">
-                                <div class="uk-panel-box uk-panel-card">
-                                    <div class="">
-                                        <label class="uk-text-small">@lang('Use singletons')</label>
+                            <div class="uk-width-1-1">
+                                <div class="uk-panel-box uk-panel-card uk-panel-header">
+                                    <h3 class="uk-panel-title">@lang('Use')</h3>
+                                    <div class="uk-margin mp-block-use">
+                                        <label class="uk-text-small">@lang('Collections')</label>
+                                        <field-multipleselect bind="profile.use.collections" options="{ selectCollectionsOptions }" if="{ collections.length }"></field-multipleselect>
+                                        <div class="uk-text-small uk-text-muted" if="{ !collections.length }">@lang('No collections available')</div>
+                                    </div>
+                                    <div class="uk-margin mp-block-use">
+                                        <label class="uk-text-small">@lang('Singletons')</label>
                                         <field-multipleselect bind="profile.use.singletons" options="{ selectSingletonsOptions }" if="{ singletons.length }"></field-multipleselect>
                                         <div class="uk-text-small uk-text-muted" if="{ !singletons.length }">@lang('No singletons available')</div>
                                     </div>
-                                    <div class="uk-margin">
-                                        <label class="uk-text-small">@lang('Use Forms')</label>
+                                    <div class="uk-margin mp-block-use">
+                                        <label class="uk-text-small">@lang('Forms')</label>
                                         <field-multipleselect bind="profile.use.forms" options="{ selectFormsOptions }" if="{ forms.length }"></field-multipleselect>
                                         <div class="uk-text-small uk-text-muted" if="{ !forms.length }">@lang('No forms available')</div>
                                     </div>
@@ -420,13 +434,13 @@
 
                         <div class="uk-width-small-1-2 uk-margin" if="{ profile.isPreviewEnabled }">
                             <label class="uk-text-small uk-margin-small">
-                                @lang('livePreviewToken')
+                                @lang('Token for live preview')
                             </label>
                             <div class="uk-flex uk-flex-middle">
                                 <input type="text" bind="profile.livePreviewToken" class="uk-width-1-1" />
 
                                 <span class="uk-flex-item-1"></span>
-                                <a class="uk-icon-refresh" onclick="{ generateToken }" style="pointer-events:auto;" title="@lang('Generate Token')" data-uk-tooltip></a>
+                                <a class="uk-icon-refresh" onclick="{ generateToken }" style="pointer-events:auto;" title="@lang('Generate token')" data-uk-tooltip></a>
                             </div>
 
                         </div>
@@ -482,7 +496,7 @@
                             <label class="uk-text-small">@lang('Prefix for form field names')</label>
                             <input aria-label="@lang('Prefix for form fields')" class="uk-width-1-1 uk-form-large" type="text" ref="label" bind="profile.formIdPrefix">
                             <div class="uk-text-small uk-margin-small">
-                                @lang('Default: mp_form_')
+                                @lang('Default:') mp_form_
                             </div>
                         </div>
 
@@ -490,7 +504,7 @@
                             <label class="uk-text-small">@lang('Name attribute of submit button')</label>
                             <input aria-label="@lang('Name attribute of submit button')" class="uk-width-1-1 uk-form-large" type="text" ref="label" bind="profile.formSubmitButtonName">
                             <div class="uk-text-small uk-margin-small">
-                                @lang('Default: submit')
+                                @lang('Default:') submit
                             </div>
                         </div>
                     </div>
@@ -498,7 +512,7 @@
                     <div class="uk-margin">
                         <field-boolean bind="profile.formSendReferer" label="@lang('Send referer url')"></field-boolean>
                         <div class="uk-text-small uk-margin-small">
-                            @lang('Send the referer url when sending the contact form. You have to create an invisible field named \'referer\' in the form validator manually.')
+                            @lang("Send the referer url when sending the contact form. You have to create an invisible field named 'referer' in the form validator manually.")
                         </div>
                     </div>
 
@@ -529,18 +543,18 @@
 
                     <field-boolean bind="profile.isInMaintenanceMode" label="@lang('Maintenance mode')"></field-boolean>
                     <div class="uk-text-small uk-margin-small">
-                        @lang('Display an \'under construction\' page to your visitors.')
+                        @lang("Display an 'under construction' page to your visitors.")
                     </div>
 
                     <div class="uk-margin">
-                        <label class="uk-text-small">@lang('Allowed ips in maintenance mode')</label>
+                        <label class="uk-text-small">@lang('Allowed IP addresses in maintenance mode')</label>
                         <div class="uk-flex uk-flex-middle">
                             <input type="text" class="uk-width-1-1" bind="profile.allowedIpsInMaintenanceMode" />
                             <span class="uk-flex-item-1"></span>
-                            <a href="#" class="uk-button uk-button-small uk-margin-left uk-text-nowrap" onclick="{ addCurrentIp }">@lang('Add current ip')</a>
+                            <a href="#" class="uk-button uk-button-small uk-margin-left uk-text-nowrap" onclick="{ addCurrentIp }">@lang('Add current IP address')</a>
                         </div>
                         <div class="uk-text-small uk-margin-small">
-                            @lang('Enter ip addresses, that can access the page while maintenance mode is enabled. Separate them with whitespaces.')
+                            @lang('Enter IP addresses, that can access the page while maintenance mode is enabled. Separate them with whitespaces.')
                         </div>
                     </div>
 
