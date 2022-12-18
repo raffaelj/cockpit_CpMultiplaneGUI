@@ -1,12 +1,5 @@
 <?php
 
-// init + load i18n
-$locale = $app->module('cockpit')->getUser('i18n', $app('i18n')->locale);
-
-if ($translationspath = $app->path("cpmultiplanegui:i18n/{$locale}.php")) {
-    $app('i18n')->load($translationspath, $locale);
-}
-
 $this->on('admin.init', function() {
 
     // add js MP_SITE_URL var for getImage route (TinyMCE plugin)
