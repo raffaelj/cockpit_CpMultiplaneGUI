@@ -1,25 +1,34 @@
 # Changelog
 
-# 0.3.4
+## 0.3.5
+
+* improved UI, i18n cleanup
+* removed addon i18n file (use the Babel addon instead)
+* improved `key-value-pair` field
+* added `/multiplane/getBranding` route
+* refactored `seo` field
+* fixed updating and localization issues in `seo` field
+
+## 0.3.4
 
 * fixed un-/publishing form on pressing Enter key
 
-# 0.3.3
+## 0.3.3
 
 * improved ui
 
-# 0.3.2
+## 0.3.2
 
 * improved profile ui
 * improved forms ui
 * added option to "publish" forms to profile via forms ui
 * added new ACL `edit_forms_in_use`
 
-# 0.3.1
+## 0.3.1
 
 * fixed imageresize autoconfig if called directly from CpMultiplane (e. g. via cli)
 
-# 0.3.0
+## 0.3.0
 
 * added select field for type based sub pages
 * a lot of cleanup
