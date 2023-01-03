@@ -249,7 +249,7 @@
                                 <div class="uk-panel-box uk-panel-card">
                                     <h3 class="uk-panel-title">
                                         <span class="uk-svg-adjust">
-                                            <img riot-src="@base('assets:app/media/icons/'){ collectionsMeta[col].icon }" alt="" data-uk-svg width="20px" height="20px" style="color:{ collectionsMeta[col].color }" />
+                                            <img riot-src="{ collectionsMeta[col].icon }" alt="" data-uk-svg width="20px" height="20px" style="color:{ collectionsMeta[col].color }" />
                                         </span>
                                         { selectCollectionsOptions[col] ?? col }
                                     </h3>
@@ -687,10 +687,12 @@
         this.collections.forEach(function(e) {
             $this.selectCollectionsOptions[e.name] = e.label || e.name;
             $this.collectionsMeta[e.name] = {
-                name: e.name,
+                name:  e.name,
                 label: e.label || e.name,
                 color: e.color || '',
-                icon: e.icon || '',
+                icon:  e.icon
+                        ? "@base('assets:app/media/icons/')" + e.icon
+                        : "@base('collections:icon.svg')",
             };
         });
         this.selectSingletonsOptions = {};
