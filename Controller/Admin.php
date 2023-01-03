@@ -116,6 +116,12 @@ class Admin extends \Cockpit\AuthController {
             return $this->helper('admin')->denyRequest();
         }
 
+        // Multiplane is in addons dir
+        if (isset($this->modules['multiplane'])) {
+            return $this->app->module('multiplane')->self_export();
+        }
+
+        // Multiplane is in modules dir of CpMultiplane
         $mpdir = $this->app->module('cpmultiplanegui')->findMultiplaneDir();
 
         if (!$mpdir) {
