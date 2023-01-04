@@ -70,6 +70,22 @@
                 width: 32%;
             }
         }
+
+        /* fix definition list items inside div */
+        @media (min-width:768px) {
+            .uk-description-list-horizontal > div > dt {
+                width:160px;
+                float:left;
+                clear:both;
+                overflow:hidden;
+                text-overflow:ellipsis;
+                white-space:nowrap
+            }
+            .uk-description-list-horizontal > div > dd {
+                margin-left:180px
+            }
+        }
+
     </style>
     <div>
         <ul class="uk-breadcrumb">
@@ -139,17 +155,17 @@
 
             <div class="uk-width-1-1 uk-margin-bottom">
                 <ul class="uk-tab uk-margin-bottom">
-                    <li class="{ tab=='main' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="main">@lang('Main')</a></li>
-                    <li class="{ tab=='other' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="other">@lang('Other')</a></li>
-                    <li class="{ tab=='theme' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="theme">@lang('Theme')</a></li>
-                    <li class="{ tab=='themes' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="themes">@lang('All Themes')</a></li>
-                    <li class="{ tab=='fieldNames' && 'uk-active'}"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="fieldNames">@lang('Field mapping')</a></li>
+                    <li class="{ tab=='main' && 'uk-active' }"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="main">@lang('Main')</a></li>
+                    <li class="{ tab=='other' && 'uk-active' }"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="other">@lang('Other')</a></li>
+                    <li class="{ tab=='theme' && 'uk-active' }"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="theme">@lang('Theme')</a></li>
+                    <li class="{ tab=='themes' && 'uk-active' }"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="themes">@lang('All Themes')</a></li>
+                    <li class="{ tab=='fieldNames' && 'uk-active' }"><a class="uk-text-capitalize" onclick="{ toggleTab }" data-tab="fieldNames">@lang('Field mapping')</a></li>
                 </ul>
             </div>
 
 
 
-            <div class="uk-width-1-1" show="{tab=='main'}">
+            <div class="uk-width-1-1" show="{ tab == 'main' }">
 
                 <div class="uk-grid" data-uk-grid-margin>
 
@@ -296,7 +312,7 @@
 
 
 
-            <div class="uk-width-1-1" show="{tab=='themes'}">
+            <div class="uk-width-1-1" show="{ tab == 'themes' }">
 
                 <div class="uk-grid uk-grid-match uk-grid-gutter uk-grid-width-medium-1-2 uk-grid-width-xlarge-1-3 uk-margin-top">
 
@@ -306,7 +322,7 @@
                             <div class="uk-panel-teaser uk-position-relative">
                                 <cp-thumbnail src="{ theme.image }" alt="screenshot" width="600px" height="350px" if="{ theme.image }"></cp-thumbnail>
                                 <canvas width="600" height="350" if="{ !theme.image }"></canvas>
-                                <a aria-label="{ theme.label || theme.name }" class="uk-position-cover uk-flex uk-flex-middle uk-flex-center uk-link-muted">
+                                <a aria-label="@lang('Show details')" class="uk-position-cover uk-flex uk-flex-middle uk-flex-center uk-link-muted" onclick="{showModal}">
                                     <div class="uk-width-1-4 uk-svg-adjust" style="color:{ theme.color }" if="{ !theme.image }">
                                         <img src="@url('cpmultiplanegui:icon.svg')" alt="icon" data-uk-svg>
                                     </div>
@@ -564,7 +580,7 @@
 
 
 
-            <div class="uk-width-1-1" show="{tab=='theme'}">
+            <div class="uk-width-1-1" show="{ tab == 'theme' }">
 
                 <div class="uk-grid uk-grid-small uk-grid-match" data-uk-grid-margin>
 
@@ -632,7 +648,7 @@
 
 
 
-            <div class="uk-form-horizontal uk-width-1-1" show="{tab=='fieldNames'}">
+            <div class="uk-form-horizontal uk-width-1-1" show="{ tab == 'fieldNames' }">
 
                 <div class="uk-form-row" each="{ field, idx in fieldNames }">
                     <label class="uk-form-label { (!profile.fieldNames || !profile.fieldNames[idx]) && 'uk-text-muted' }" title="{ App.i18n.get('default:') + ' ' + field }" data-uk-tooltip>{ idx }</label>
@@ -658,11 +674,56 @@
       </form>
     </div>
 
+    <div ref="modal" class="uk-modal">
+        <div class="uk-modal-dialog uk-modal-dialog-large">
+
+            <div class="" if="{ themeDetails }">
+
+                <div class="uk-modal-header">
+                    <h2>{ themeDetails.name }</h2>
+                </div>
+
+                <div class="uk-overflow-container">
+
+                    <p if="{ themeDetails.info && themeDetails.info.description }">{ themeDetails.info.description }</p>
+
+                    <dl class="uk-description-list-horizontal">
+                        <dt>@lang('Theme')</dt><dd>{ themeDetails.name }</dd>
+                        <dt>@lang('Version')</dt><dd if="{ themeDetails.info }">{ themeDetails.info.version }</dd>
+                        <dt>@lang('License')</dt><dd if="{ themeDetails.info }">{ themeDetails.info.license }</dd>
+                        <dt>@lang('Author')</dt><dd if="{  themeDetails.info && themeDetails.info.author && typeof themeDetails.info.author == 'string' }">{ themeDetails.info.author }</dd>
+                        <dt>@lang('Path')</dt><dd if="{ themeDetails.path }">{ themeDetails.path }</dd>
+
+                        <div if="{ themeDetails.info && themeDetails.info.keywords && Array.isArray(themeDetails.info.keywords) && themeDetails.info.keywords.length }">
+                            <dt>@lang('Tags')</dt>
+                            <dd><span class="uk-badge uk-margin-small-right" each="{ k in themeDetails.info.keywords }">{ k }</span></dd>
+                        </div>
+                    </dl>
+
+                    <h3 class="">@lang('Theme defaults')</h3>
+
+                    <dl class="uk-description-list-horizontal">
+                        <div each="{ conf, idx in themeDetails.config }" if="{ idx != 'lexy' }">
+                            <dt>{ idx }:</dt><dd>{ typeof conf != 'object' ? conf : JSON.stringify(conf) }</dd>
+                        </div>
+                    </dl>
+
+                    <h3 class="" if="{ themeDetails.image }">@lang('Thumbnail')</h3>
+
+                    <img riot-src="{ themeDetails.image }" alt="" if="{ themeDetails.image }" />
+
+                </div>
+            </div>
+
+            <div class="uk-modal-footer uk-text-right"><button class="uk-button uk-button-large uk-button-link uk-modal-close">{ App.i18n.get('Close') }</button></div>
+        </div>
+    </div>
+
     <cp-inspectobject ref="inspect"></cp-inspectobject>
 
     <script type="view/script">
 
-        var $this = this;
+        var $this = this, modal;
 
         riot.util.bind(this);
 
@@ -715,6 +776,8 @@
             },
         ];
 
+        this.themeDetails = {};
+
         this.on('mount', function() {
 
             // bind global command + save
@@ -730,6 +793,13 @@
                     collections: [],
                 };
             }
+
+            modal = UIkit.modal(this.refs.modal);
+            modal.on({
+                'hide.uk.modal': function() {
+                    $this.themeDetails = {};
+                }
+            });
 
             this.get_multiplane_config();
 
@@ -896,6 +966,13 @@
             if (this.profile.fieldNames[e.item.idx] == '') {
                 delete this.profile.fieldNames[e.item.idx];
             }
+        }
+
+        showModal(e) {
+            if (e) e.preventDefault();
+
+            this.themeDetails = e.item.theme;
+            modal.show();
         }
 
     </script>
